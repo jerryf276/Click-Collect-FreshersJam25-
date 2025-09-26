@@ -1,6 +1,8 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 [Tool]
 public partial class ShopGenerator : Node
@@ -20,7 +22,7 @@ public partial class ShopGenerator : Node
     };
 
     [Export]
-    Dictionary<Tile, Vector2I> tilesInMap;
+    Godot.Collections.Dictionary<Tile, Vector2I> tilesInMap;
 
     struct DirectionAllowance
     {
@@ -76,29 +78,45 @@ public partial class ShopGenerator : Node
         {
             for (int y = 0; y < tiledata.GetLength(1); y++)
             {
-                if (x == 0 || y == 0 || y >= tiledata.GetLength(1) -1 || x >= tiledata.GetLength(0) -1)
+                if (x == 0 || y == 0 || y >= tiledata.GetLength(1) - 1 || x >= tiledata.GetLength(0) - 1)
                 {
                     tiledata[x, y] = Tile.WALL;
-                    tilePossibilities[x, y] = new Tile[1] { Tile.WALL };
+                    tilePossibilities[x, y] = new Tile[0];
+                }
+                else {
+                    tilePossibilities[x, y] = new Tile[3] { Tile.FLOOR, Tile.SHELF_V, Tile.SHELF_H };
                 }
             }
         }
-
-        // Initially calculate possibilities
+        GD.Print("Check all map");
         for (int x = 0; x < tiledata.GetLength(0); x++)
         {
             for (int y = 0; y < tiledata.GetLength(1); y++)
             {
-                if (tiledata[x, y] == Tile.UNDEFINED){
-                    Tile[] allowedTiles = new Tile[4] {Tile.WALL, Tile.FLOOR, Tile.SHELF_V, Tile.SHELF_H};
-
-                }
+                CalculateTilePossibilites(new Vector2I(x, y), null, false);
             }
         }
-
+        GD.Print("Loop Begin");
         // WFC
-        while (!IsMapFull()) { 
+        int hangPrevention = 0;
+        while (!IsMapFull()) {
+            hangPrevention++;
+            if (hangPrevention > 1500) {
+                GD.PrintErr("I've gone on too long...");
+                return;
+            }
             // Check 
+            Vector2I colapsed = ColapseLeastPossibilities();
+            if (colapsed.X == -1)
+            {
+                GD.PrintErr("Its impossible...");
+                return;
+            }
+            // Propogate
+            if (colapsed.Y - 1 >= 0) CalculateTilePossibilites(colapsed + new Vector2I(0, -1), System.Array.Empty<Vector2I>());
+            if (colapsed.Y + 1 < tiledata.GetLength(1)) CalculateTilePossibilites(colapsed + new Vector2I(0, 1), System.Array.Empty<Vector2I>());
+            if (colapsed.X - 1 >= 0) CalculateTilePossibilites(colapsed + new Vector2I(-1, 0), System.Array.Empty<Vector2I>());
+            if (colapsed.X + 1 < tiledata.GetLength(0)) CalculateTilePossibilites(colapsed + new Vector2I(1, 0), System.Array.Empty<Vector2I>());
         }
     }
 
@@ -112,7 +130,7 @@ public partial class ShopGenerator : Node
     }
 
     private void FullRefreshTilemap() {
-        GenerateNewMapData(11, 15);
+        GenerateNewMapData(30, 30);
         SetTilemapBasedOnData();
     }
 
@@ -126,5 +144,223 @@ public partial class ShopGenerator : Node
             }
         }
         return true;
+    }
+
+    private void CalculateTilePossibilites(Vector2I on, Vector2I[] beenTo, bool recurse = true) {
+        HashSet<Tile> currentPossibilities = new HashSet<Tile>() { Tile.FLOOR, Tile.SHELF_V, Tile.SHELF_H };
+        GD.Print("Now checking: ", on);
+        // Dont check me if I am already colapsed
+        if (tiledata[on.X, on.Y] == Tile.UNDEFINED)
+        {
+            // Check above
+            if (on.Y - 1 >= 0)
+            {
+                HashSet<Tile> possibilitiesThisDirection = new HashSet<Tile>();
+                if (tiledata[on.X, on.Y - 1] == Tile.UNDEFINED)
+                {
+                    foreach (Tile tile in tilePossibilities[on.X, on.Y - 1])
+                    {
+                        foreach (Tile allowedTile in allowedTiles[tile].Down)
+                        {
+                            possibilitiesThisDirection.Add(allowedTile);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Tile allowedTile in allowedTiles[tiledata[on.X, on.Y - 1]].Down)
+                    {
+                        possibilitiesThisDirection.Add(allowedTile);
+                    }
+                }
+                foreach (Tile overallAllowed in currentPossibilities)
+                {
+                    bool included = false;
+                    foreach (Tile allowed in possibilitiesThisDirection)
+                    {
+                        if (allowed == overallAllowed)
+                        {
+                            included = true; break;
+                        }
+                    }
+                    if (!included) currentPossibilities.Remove(overallAllowed);
+                }
+            }
+            // Check below
+            if (on.Y + 1 < tilePossibilities.GetLength(1))
+            {
+                HashSet<Tile> possibilitiesThisDirection = new HashSet<Tile>();
+                if (tiledata[on.X, on.Y + 1] == Tile.UNDEFINED)
+                {
+                    foreach (Tile tile in tilePossibilities[on.X, on.Y + 1])
+                    {
+                        foreach (Tile allowedTile in allowedTiles[tile].Up)
+                        {
+                            possibilitiesThisDirection.Add(allowedTile);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Tile allowedTile in allowedTiles[tiledata[on.X, on.Y + 1]].Up)
+                    {
+                        possibilitiesThisDirection.Add(allowedTile);
+                    }
+                }
+                foreach (Tile overallAllowed in currentPossibilities)
+                {
+                    bool included = false;
+                    foreach (Tile allowed in possibilitiesThisDirection)
+                    {
+                        if (allowed == overallAllowed)
+                        {
+                            included = true; break;
+                        }
+                    }
+                    if (!included) currentPossibilities.Remove(overallAllowed);
+                }
+            }
+            // Check left
+            if (on.X - 1 >= 0)
+            {
+                HashSet<Tile> possibilitiesThisDirection = new HashSet<Tile>();
+                if (tiledata[on.X - 1, on.Y] == Tile.UNDEFINED)
+                {
+                    foreach (Tile tile in tilePossibilities[on.X - 1, on.Y])
+                    {
+                        foreach (Tile allowedTile in allowedTiles[tile].Right)
+                        {
+                            possibilitiesThisDirection.Add(allowedTile);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Tile allowedTile in allowedTiles[tiledata[on.X - 1, on.Y]].Right)
+                    {
+                        possibilitiesThisDirection.Add(allowedTile);
+                    }
+                }
+                foreach (Tile overallAllowed in currentPossibilities)
+                {
+                    bool included = false;
+                    foreach (Tile allowed in possibilitiesThisDirection)
+                    {
+                        if (allowed == overallAllowed)
+                        {
+                            included = true; break;
+                        }
+                    }
+                    if (!included) currentPossibilities.Remove(overallAllowed);
+                }
+            }
+            // Check right
+            if (on.X + 1 < tilePossibilities.GetLength(0))
+            {
+                HashSet<Tile> possibilitiesThisDirection = new HashSet<Tile>();
+                if (tiledata[on.X + 1, on.Y] == Tile.UNDEFINED)
+                {
+                    foreach (Tile tile in tilePossibilities[on.X + 1, on.Y])
+                    {
+                        foreach (Tile allowedTile in allowedTiles[tile].Left)
+                        {
+                            possibilitiesThisDirection.Add(allowedTile);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (Tile allowedTile in allowedTiles[tiledata[on.X + 1, on.Y]].Left)
+                    {
+                        possibilitiesThisDirection.Add(allowedTile);
+                    }
+                }
+                foreach (Tile overallAllowed in currentPossibilities)
+                {
+                    bool included = false;
+                    foreach (Tile allowed in possibilitiesThisDirection)
+                    {
+                        if (allowed == overallAllowed)
+                        {
+                            included = true; break;
+                        }
+                    }
+                    if (!included) currentPossibilities.Remove(overallAllowed);
+                }
+            }
+        
+            // Time to check my neighbours if I have changed
+            if (recurse && !currentPossibilities.SetEquals(new HashSet<Tile>(tilePossibilities[on.X, on.Y])))
+            {
+                if (tiledata[on.X, on.Y] == Tile.UNDEFINED) tilePossibilities[on.X, on.Y] = currentPossibilities.ToArray();
+                if (on.Y - 1 >= 0 && !beenTo.Contains(new Vector2I(on.X, on.Y - 1)))
+                {
+                    Vector2I[] passIn = new Vector2I[beenTo.Length + 1];
+                    passIn[beenTo.Length] = on;
+                    GD.Print("Going Deeper Up!");
+                    CalculateTilePossibilites(new Vector2I(on.X, on.Y - 1), passIn);
+                
+                }
+                if (on.Y + 1 < tilePossibilities.GetLength(1) && !beenTo.Contains(new Vector2I(on.X, on.Y + 1)))
+                {
+                    Vector2I[] passIn = new Vector2I[beenTo.Length + 1];
+                    passIn[beenTo.Length] = on;
+                    GD.Print("Going Deeper Down!");
+                    CalculateTilePossibilites(new Vector2I(on.X, on.Y + 1), passIn);
+                
+                }
+                if (on.X - 1 >= 0 && !beenTo.Contains(new Vector2I(on.X - 1, on.Y)))
+                {
+                    Vector2I[] passIn = new Vector2I[beenTo.Length + 1];
+                    passIn[beenTo.Length] = on;
+                    GD.Print("Going Deeper Left!");
+                    CalculateTilePossibilites(new Vector2I(on.X - 1, on.Y), passIn);
+                
+                }
+                if (on.X + 1 < tilePossibilities.GetLength(0) && !beenTo.Contains(new Vector2I(on.X + 1, on.Y)))
+                {
+                    Vector2I[] passIn = new Vector2I[beenTo.Length + 1];
+                    passIn[beenTo.Length] = on;
+                    GD.Print("Going Deeper Right!");
+                    CalculateTilePossibilites(new Vector2I(on.X + 1, on.Y), passIn);
+                
+                }
+            }
+            else {
+                if (tiledata[on.X, on.Y] == Tile.UNDEFINED) tilePossibilities[on.X, on.Y] = currentPossibilities.ToArray();
+                GD.Print("Finished Now!");
+            }
+        }
+    }
+
+    private Vector2I ColapseLeastPossibilities() {
+        // Not gonna random select lowest, lets try top left first?/!
+        Vector2I lowestAt = new Vector2I(0, 0);
+        int lowest = int.MaxValue;
+        for (int x = 0; x < tiledata.GetLength(0); x++)
+        {
+            for (int y = 0; y < tiledata.GetLength(1); y++)
+            {
+                if (tilePossibilities[x, y].Length < lowest && tiledata[x, y] == Tile.UNDEFINED) {
+                    
+                    lowest = tilePossibilities[x, y].Length;
+                    lowestAt = new Vector2I(x, y);
+                    GD.Print("Tile lower: ", lowest, lowestAt);
+                }
+            }
+        }
+
+        // Now colapse it
+        if (tilePossibilities[lowestAt.X, lowestAt.Y].Length > 0)
+        {
+            GD.Print("Colapsing: ", lowestAt);
+            int chosenColapse = rng.RandiRange(0, tilePossibilities[lowestAt.X, lowestAt.Y].Length - 1);
+            tiledata[lowestAt.X, lowestAt.Y] = tilePossibilities[lowestAt.X, lowestAt.Y][chosenColapse];
+            tilePossibilities[lowestAt.X, lowestAt.Y] = System.Array.Empty<Tile>();
+            return lowestAt;
+        }
+        else {
+            return new Vector2I(-1, -1); // ERROR
+        }
     }
 }
