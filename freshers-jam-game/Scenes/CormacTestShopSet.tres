@@ -1,0 +1,19 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cpukuftv7e2nq"]
+
+[ext_resource type="Texture2D" uid="uid://jslvuhup73mh" path="res://Tiles/DebugBlocksTiles/together.png" id="1_uojsc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e6n6c"]
+texture = ExtResource("1_uojsc")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+
+[resource]
+sources/21 = SubResource("TileSetAtlasSource_e6n6c")
