@@ -19,7 +19,10 @@ public partial class GameManager : Node2D
 
     bool isPaused;
 
+    PackedScene scene;
     Node currentScene;
+
+    SceneState currentSceneState;
 
     string MAIN_MENU_SCENE = "res://MainMenu.tscn";
    // string GAME_SCENE = "res://Game.tscn";
@@ -32,14 +35,19 @@ public partial class GameManager : Node2D
 
         DisplayServer.WindowSetTitle("Click & collect");
 
-        
+        currentSceneState = SceneState.MAIN_MENU;
+        if(currentSceneState == SceneState.MAIN_MENU)
+        {
+            scene = ResourceLoader.Load<PackedScene>("res://MainMenu.tscn");
+        }
+        Node menuScene = scene.Instantiate();
+        instance.GetTree().Root.AddChild(menuScene);
     }
 
 
     public override void _Process(double delta)
     {
-
-
+       
     }
 
     static public void OnSoloStart()
@@ -53,8 +61,9 @@ public partial class GameManager : Node2D
 
     }
 
-    static void OnMenuTransition()
+    static void OnMainMenuTransition()
     {
+        
 
     }
 
