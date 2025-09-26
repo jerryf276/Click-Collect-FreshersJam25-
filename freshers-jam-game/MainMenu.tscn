@@ -1,3 +1,18 @@
-[gd_scene format=3 uid="uid://fjkao7ory4d5"]
+[gd_scene load_steps=2 format=3 uid="uid://fjkao7ory4d5"]
+
+[ext_resource type="Script" uid="uid://bhx7vkhmv70yh" path="res://MainMenu.cs" id="1_i26rj"]
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_i26rj")
+
+[node name="PlayButton" type="MenuButton" parent="."]
+offset_left = 448.0
+offset_top = 192.0
+offset_right = 623.0
+offset_bottom = 308.0
+text = "Play"
+item_count = 2
+popup/item_0/text = "Solo"
+popup/item_0/id = 0
+popup/item_1/text = "Co-op"
+popup/item_1/id = 1
