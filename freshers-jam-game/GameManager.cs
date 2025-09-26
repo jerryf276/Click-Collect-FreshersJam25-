@@ -3,6 +3,8 @@ using System;
 
 public partial class GameManager : Node2D
 {
+    static GameManager instance;
+
     enum SceneState
     {
         MAIN_MENU,
@@ -17,7 +19,7 @@ public partial class GameManager : Node2D
 
     bool isPaused;
 
-    Node2D currentScene;
+    Node currentScene;
 
     string MAIN_MENU_SCENE = "res://MainMenu.tscn";
    // string GAME_SCENE = "res://Game.tscn";
@@ -26,9 +28,11 @@ public partial class GameManager : Node2D
 
     public override void _Ready()
     {
-        DisplayServer.WindowSetTitle("Click & collect");
-        
+        instance = this;
 
+        DisplayServer.WindowSetTitle("Click & collect");
+
+        
     }
 
 
@@ -45,6 +49,11 @@ public partial class GameManager : Node2D
 
 
     static public void OnDuoStart()
+    {
+
+    }
+
+    static void OnMenuTransition()
     {
 
     }
