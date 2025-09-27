@@ -1,7 +1,17 @@
-[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://cpukuftv7e2nq"]
+[gd_resource type="TileSet" load_steps=16 format=3 uid="uid://cpukuftv7e2nq"]
 
 [ext_resource type="Texture2D" uid="uid://yc10rblhwiyt" path="res://Tiles/DebugBlocksTiles/ContextualDebug.png" id="1_e6n6c"]
 [ext_resource type="Texture2D" uid="uid://jslvuhup73mh" path="res://Tiles/DebugBlocksTiles/together.png" id="1_uojsc"]
+[ext_resource type="PackedScene" uid="uid://c3mmqxldvfmfb" path="res://Scenes/Tiles/Bread_H.tscn" id="2_de6pf"]
+[ext_resource type="PackedScene" uid="uid://dt5kek8xwlnca" path="res://Scenes/Tiles/Floor.tscn" id="3_30adr"]
+[ext_resource type="PackedScene" uid="uid://bf06v6pl8pyi0" path="res://Scenes/Tiles/Bread_V.tscn" id="3_g1m4u"]
+[ext_resource type="PackedScene" uid="uid://bov1ijkwmgtll" path="res://Scenes/Tiles/Freezer_H.tscn" id="4_30adr"]
+[ext_resource type="PackedScene" uid="uid://cc66xp43qw6yq" path="res://Scenes/Tiles/Freezer_V.tscn" id="5_xsi01"]
+[ext_resource type="PackedScene" uid="uid://u2vruwnes3pn" path="res://Scenes/Tiles/Fridge_H.tscn" id="6_rxipm"]
+[ext_resource type="PackedScene" uid="uid://btjyp4fwx6nnw" path="res://Scenes/Tiles/Fridge_V.tscn" id="7_vj8rq"]
+[ext_resource type="PackedScene" uid="uid://nm507mkan221" path="res://Scenes/Tiles/Vegtable_H.tscn" id="8_7apbf"]
+[ext_resource type="PackedScene" uid="uid://krbjb1u6itm4" path="res://Scenes/Tiles/Vegtable_V.tscn" id="9_dhsjt"]
+[ext_resource type="PackedScene" uid="uid://der2a6x1ffp3q" path="res://Scenes/Tiles/Wall.tscn" id="11_xsi01"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ug5hw"]
 texture = ExtResource("1_e6n6c")
@@ -20,6 +30,16 @@ texture = ExtResource("1_e6n6c")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_e6n6c"]
 resource_name = "TileScenes"
+scenes/1/scene = ExtResource("2_de6pf")
+scenes/2/scene = ExtResource("3_g1m4u")
+scenes/3/scene = ExtResource("4_30adr")
+scenes/4/scene = ExtResource("5_xsi01")
+scenes/5/scene = ExtResource("6_rxipm")
+scenes/6/scene = ExtResource("7_vj8rq")
+scenes/7/scene = ExtResource("8_7apbf")
+scenes/8/scene = ExtResource("9_dhsjt")
+scenes/9/scene = ExtResource("11_xsi01")
+scenes/10/scene = ExtResource("3_30adr")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e6n6c"]
 texture = ExtResource("1_uojsc")

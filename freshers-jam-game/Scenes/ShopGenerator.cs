@@ -191,10 +191,17 @@ public partial class ShopGenerator : Node
     }
 
     public void SetTilemapBasedOnData() {
+        for (int x = 0; x < tiledata.GetLength(0); x++)
+        {
+            for (int y = 0; y < tiledata.GetLength(1); y++)
+            {
+                tilemap.SetCell(new Vector2I(x, y), -1);
+            }
+        }
         for (int x = 0; x < tiledata.GetLength(0); x++) {
             for (int y = 0; y < tiledata.GetLength(1); y++)
             {
-                tilemap.SetCell(new Vector2I(x, y), 0, tilesInMap[tiledata[x, y]]);
+                tilemap.SetCell(new Vector2I(x, y), 1, Vector2I.Zero, tilesInMap[tiledata[x, y]].X);
             }
         }
     }
