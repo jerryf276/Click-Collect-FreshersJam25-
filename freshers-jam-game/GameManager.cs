@@ -1,5 +1,11 @@
 using Godot;
 using System;
+using System.IO;
+
+
+
+
+
 
 public partial class GameManager : Node2D
 {
@@ -8,7 +14,8 @@ public partial class GameManager : Node2D
     enum SceneState
     {
         MAIN_MENU,
-        IN_GAME
+        IN_GAME_SOLO,
+        IN_GAME_DUO
     }
 
     enum Players
@@ -24,8 +31,8 @@ public partial class GameManager : Node2D
 
     SceneState currentSceneState;
 
-    string MAIN_MENU_SCENE = "res://MainMenu.tscn";
-   // string GAME_SCENE = "res://Game.tscn";
+    string MAIN_MENU_SCENE = "res://Scenes/TitleScreen.tscn";
+  
 
 
 
@@ -38,7 +45,7 @@ public partial class GameManager : Node2D
         currentSceneState = SceneState.MAIN_MENU;
         if(currentSceneState == SceneState.MAIN_MENU)
         {
-            scene = ResourceLoader.Load<PackedScene>("res://MainMenu.tscn");
+            scene = ResourceLoader.Load<PackedScene>(MAIN_MENU_SCENE);
         }
         Node menuScene = scene.Instantiate();
         if (scene != null)
@@ -57,15 +64,29 @@ public partial class GameManager : Node2D
        
     }
 
-    static public void OnSoloStart()
+    public static void OnSoloStart()
     {
-        
+        instance.currentSceneState = SceneState.IN_GAME_SOLO;
+
+        //note code below could be made into seprate func for code reusability
+        instance.GetTree().CurrentScene.QueueFree();
+        instance.scene = ResourceLoader.Load<PackedScene>("res://Scenes/CormacShopGen.tscn");
+        Node newScene = instance.scene.Instantiate();
+        instance.GetTree().Root.AddChild(newScene);
+        instance.GetTree().CurrentScene = newScene;
     }
 
 
     static public void OnDuoStart()
     {
+        instance.currentSceneState = SceneState.IN_GAME_DUO;
 
+        //note code below could be made into seprate func for code reusability
+        instance.GetTree().CurrentScene.QueueFree();
+        instance.scene = ResourceLoader.Load<PackedScene>("res://SplitScreenScene.tscn");
+        Node newScene = instance.scene.Instantiate();
+        instance.GetTree().Root.AddChild(newScene);
+        instance.GetTree().CurrentScene = newScene;
     }
 
     static void OnMainMenuTransition()
