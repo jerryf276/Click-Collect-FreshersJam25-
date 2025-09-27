@@ -31,6 +31,10 @@ public partial class ShopGenerator : Node
     [Export]
     Godot.Collections.Dictionary<Tile, Vector2I> tilesInMap;
 
+    // So items in the shop can be passed over
+    [Export]
+    Node checklistManager;
+
     // Tool for returning values which appear in both arrays. 
     static private Tile[] ReturnCrossoverValues(Tile[] a, Tile[] b)
     {
@@ -207,7 +211,7 @@ public partial class ShopGenerator : Node
         }
     }
 
-    public void SetTilemapBasedOnData() {
+    public void SetTilemapBasedOnData(int maxItemsPerCategory = 3) {
         for (int x = 0; x < tiledata.GetLength(0); x++)
         {
             for (int y = 0; y < tiledata.GetLength(1); y++)
@@ -219,47 +223,61 @@ public partial class ShopGenerator : Node
             for (int y = 0; y < tiledata.GetLength(1); y++)
             {
                 tilemap.SetCell(new Vector2I(x, y), 1, Vector2I.Zero, tilesInMap[tiledata[x, y]].X);
-                Callable.From(() =>
+            }
+        }
+
+        Callable.From(() =>
+        {
+            if (!Engine.IsEditorHint())
+            {
+                // Create dictionary of already chosen items
+                System.Collections.Generic.Dictionary<Shelf.ShelfType, HashSet<string>> chosenItems = new System.Collections.Generic.Dictionary<Shelf.ShelfType, HashSet<string>>();
+
+                for (int i = 0; i < tilemap.GetChildren().Count; i++)
                 {
-                    if (!Engine.IsEditorHint())
+                    if (tilemap.GetChildOrNull<Shelf>(i) != null)
                     {
-                        // Create dictionary of already chosen items
-                        System.Collections.Generic.Dictionary<Shelf.ShelfType, HashSet<string>> chosenItems = new System.Collections.Generic.Dictionary<Shelf.ShelfType, HashSet<string>>();
-
-                        // TODO move this
-                        const int maxItemsPerShelfType = 2;
-                        for (int i = 0; i < tilemap.GetChildren().Count; i++)
+                        Shelf thisShelf = tilemap.GetChild<Shelf>(i);
+                        if (itemsByShelfType[thisShelf.myType] != null && itemsByShelfType[thisShelf.myType].Count > 0)
                         {
-                            if (tilemap.GetChildOrNull<Shelf>(i) != null)
-                            {
-                                Shelf thisShelf = tilemap.GetChild<Shelf>(i);
-                                if (itemsByShelfType[thisShelf.myType] != null && itemsByShelfType[thisShelf.myType].Count > 0)
-                                {
-                                    if (!chosenItems.ContainsKey(thisShelf.myType)) chosenItems.Add(thisShelf.myType, new HashSet<string>());
+                            if (!chosenItems.ContainsKey(thisShelf.myType)) chosenItems.Add(thisShelf.myType, new HashSet<string>());
 
-                                    // Use an item from chosen items if we are full
-                                    if (chosenItems[thisShelf.myType].Count >= maxItemsPerShelfType)
-                                    {
-                                        thisShelf.Contains = chosenItems[thisShelf.myType].ToArray()[rng.RandiRange(0, chosenItems[thisShelf.myType].Count - 1)];
-                                    }
-                                    // Otherwise use an item from the dictionary and add it to our chosen items
-                                    else
-                                    {
-                                        thisShelf.Contains = itemsByShelfType[thisShelf.myType][rng.RandiRange(0, itemsByShelfType[thisShelf.myType].Count - 1)];
-                                        chosenItems[thisShelf.myType].Add(thisShelf.Contains);
-                                    }
-                                }
+                            // Use an item from chosen items if we are full
+                            if (chosenItems[thisShelf.myType].Count >= maxItemsPerCategory)
+                            {
+                                thisShelf.Contains = chosenItems[thisShelf.myType].ToArray()[rng.RandiRange(0, chosenItems[thisShelf.myType].Count - 1)];
+                            }
+                            // Otherwise use an item from the dictionary and add it to our chosen items
+                            else
+                            {
+                                thisShelf.Contains = itemsByShelfType[thisShelf.myType][rng.RandiRange(0, itemsByShelfType[thisShelf.myType].Count - 1)];
+                                chosenItems[thisShelf.myType].Add(thisShelf.Contains);
                             }
                         }
                     }
-                }).CallDeferred();
+                }
+
+                if (checklistManager != null && checklistManager is ChecklistManager)
+                {
+                    HashSet<string> allItemsChosen = new HashSet<string>();
+                    foreach (KeyValuePair<Shelf.ShelfType, HashSet<string>> kvp in chosenItems)
+                    {
+                        foreach (string item in kvp.Value)
+                        {
+                            allItemsChosen.Add(item);
+                        }
+                    }
+
+                    ((ChecklistManager)checklistManager).itemsInShop = allItemsChosen;
+                    ((ChecklistManager)checklistManager).GenerateNewList();
+                }
             }
-        }
+        }).CallDeferred();
     }
 
     private void FullRefreshTilemap() {
         GenerateNewMapData(7, 8);
-        SetTilemapBasedOnData();
+        SetTilemapBasedOnData(2);
     }
 
 

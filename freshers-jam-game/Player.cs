@@ -13,8 +13,8 @@ public partial class Player : Node2D
 	private int maxInventoryCapacity = 5;
 
 
-	HashSet<string> storedInventory = new HashSet<string>();
-    [Export] private int storedInventoryNumber = 0;
+	public HashSet<string> storedInventory = new HashSet<string>();
+    [Export] public int storedInventoryNumber = 0;
 
     public Shelf shelfImOn;
 
