@@ -3,12 +3,13 @@
 [ext_resource type="Script" uid="uid://dem0ck5itr88s" path="res://Player.cs" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://f503mxsfh85x" path="res://icon.svg" id="1_xhfnw"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xhfnw"]
-size = Vector2(127.5, 126.5)
+[sub_resource type="CircleShape2D" id="CircleShape2D_kpjcp"]
+radius = 63.0317
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("player") groups=["player"]]
 script = ExtResource("1_kpjcp")
 player = NodePath("CharacterBody2D")
+storedInventory = 5
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 motion_mode = 1
@@ -17,5 +18,4 @@ motion_mode = 1
 texture = ExtResource("1_xhfnw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(0.25, -0.25)
-shape = SubResource("RectangleShape2D_xhfnw")
+shape = SubResource("CircleShape2D_kpjcp")
