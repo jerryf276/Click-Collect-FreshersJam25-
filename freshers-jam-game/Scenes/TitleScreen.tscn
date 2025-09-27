@@ -1,13 +1,21 @@
-[gd_scene format=3 uid="uid://56ls0751u3rg"]
+[gd_scene load_steps=4 format=3 uid="uid://56ls0751u3rg"]
+
+[ext_resource type="FontFile" uid="uid://dxvigofj150bx" path="res://fonts/PIXY.ttf" id="1_uebgo"]
+[ext_resource type="Script" uid="uid://c3t182u7rf5ri" path="res://Scenes/MainMenu.cs" id="1_vmg2h"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8l4an"]
+specular_color = Color(0.198666, 0.463625, 0.962422, 1)
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_vmg2h")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 649.0
+texture = SubResource("CanvasTexture_8l4an")
 
 [node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
 layout_mode = 1
@@ -23,13 +31,62 @@ theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 60
+theme_override_constants/separation = 15
 
 [node name="Seperator" type="Control" parent="TextureRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="TextureRect/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 12
+theme_override_constants/shadow_offset_y = 12
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 88
 text = "GAME TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Seperator" type="Control" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Single_Player_Button" type="Button" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 75)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 24
+text = "single player"
+
+[node name="Multi_Player_Button" type="Button" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 75)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 24
+text = "Multiplayer"
+
+[node name="Controls_Button" type="Button" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 75)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 24
+text = "CONTROLS"
+
+[node name="Quit_Button" type="Button" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 75)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_uebgo")
+theme_override_font_sizes/font_size = 24
+text = "QUIT"
+
+[node name="Seperator2" type="Control" parent="TextureRect/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
