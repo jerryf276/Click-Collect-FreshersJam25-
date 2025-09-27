@@ -11,13 +11,19 @@ public partial class Shelf : StaticBody2D
     [Export]
     public ShelfType myType;
 
+    [Export]
+    Godot.Label whatIContainLabel;
+
     private string contains;
 
     [Export]
     public string Contains  
     {
         get { return contains; }  
-        set { contains = value; GetNode<Godot.Label>("./InsideBubble/InsideMe").Text = value; } 
+        set { contains = value; if (whatIContainLabel != null) {
+                whatIContainLabel.Text = value;
+                whatIContainLabel.Position = -whatIContainLabel.Size / 2.0f / 5.0f;
+            } } 
     }
 
     public override void _Ready()
