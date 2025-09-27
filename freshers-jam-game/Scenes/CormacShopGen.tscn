@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=4 uid="uid://cdpwh4yohbv5o"]
+
+[ext_resource type="TileSet" uid="uid://cpukuftv7e2nq" path="res://Scenes/CormacTestShopSet.tres" id="1_qfsg4"]
+[ext_resource type="Script" uid="uid://dpsw84ogtjr7x" path="res://Scenes/ShopGenerator.cs" id="2_se3lx"]
+[ext_resource type="PackedScene" uid="uid://dx7ecrxlenx0q" path="res://Player.tscn" id="3_se3lx"]
+
+[node name="CormacShopGen" type="Node2D"]
+texture_filter = 1
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAD//wAAAQAAAAAACQD+/wAAAQAAAAAACQD9/wAAAQAAAAAACQD8/wAAAQAAAAAACQD7/wAAAQAAAAAACQD7/wEAAQAAAAAACQD7/wIAAQAAAAAACQD7/wMAAQAAAAAACQD7/wQAAQAAAAAACQD7/wUAAQAAAAAACQD8/wUAAQAAAAAACQD9/wUAAQAAAAAACQD+/wUAAQAAAAAACQD//wUAAQAAAAAACQD//wQAAQAAAAAACgD+/wQAAQAAAAAACgD//wMAAQAAAAAACgD+/wMAAQAAAAAACgD//wIAAQAAAAAACgD+/wIAAQAAAAAACgD//wEAAQAAAAAACgD+/wEAAQAAAAAACgD9/wEAAQAAAAAACgD8/wEAAQAAAAAACgD8/wIAAQAAAAAACgD9/wIAAQAAAAAACgD9/wMAAQAAAAAACgD8/wMAAQAAAAAACgD8/wQAAQAAAAAACgD9/wQAAQAAAAAACgA=")
+tile_set = ExtResource("1_qfsg4")
+
+[node name="ShopGenerator" type="Node" parent="." node_paths=PackedStringArray("tilemap")]
+script = ExtResource("2_se3lx")
+tilemap = NodePath("../TileMapLayer")
+tilesInMap = {
+0: Vector2i(9, 0),
+1: Vector2i(10, 0),
+2: Vector2i(9, 0),
+3: Vector2i(5, 0),
+4: Vector2i(6, 0),
+5: Vector2i(3, 0),
+6: Vector2i(4, 0),
+7: Vector2i(7, 0),
+8: Vector2i(8, 0),
+9: Vector2i(1, 0),
+10: Vector2i(2, 0)
+}
+
+[node name="Player" parent="." instance=ExtResource("3_se3lx")]
+position = Vector2(-125, 192)
+scale = Vector2(0.5, 0.5)
+storedInventory = 0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(213, 207)
