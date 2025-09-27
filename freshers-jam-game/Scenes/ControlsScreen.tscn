@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bohni453fwst4"]
+[gd_scene load_steps=9 format=3 uid="uid://bohni453fwst4"]
 
-[ext_resource type="FontFile" uid="uid://dxvigofj150bx" path="res://fonts/PIXY.ttf" id="1_ih8mc"]
-[ext_resource type="Texture2D" uid="uid://dl430h62eyt2j" path="res://UI/Keyboard Key.png" id="2_7fegs"]
-[ext_resource type="Texture2D" uid="uid://c0okdv36uhey1" path="res://UI/upArrow.png" id="3_6o4gv"]
-[ext_resource type="Texture2D" uid="uid://dwayfjpqn38hq" path="res://UI/downArrow.png" id="4_5uknq"]
-[ext_resource type="Texture2D" uid="uid://c0gcm7cuu6gmq" path="res://UI/rightArrow.png" id="5_hjkpg"]
-[ext_resource type="Texture2D" uid="uid://c1ub4bgqe6rt6" path="res://UI/leftArrow.png" id="6_jn13c"]
-[ext_resource type="Texture2D" uid="uid://bp6cjuj1ioqwy" path="res://UI/Enter Key.png" id="7_gviwa"]
+[ext_resource type="Script" uid="uid://c6asggqmmdofs" path="res://ControlsScreen.cs" id="1_farsn"]
+[ext_resource type="FontFile" uid="uid://dxvigofj150bx" path="res://fonts/PIXY.ttf" id="2_frtmr"]
+[ext_resource type="Texture2D" uid="uid://dl430h62eyt2j" path="res://UI/Keyboard Key.png" id="3_a42be"]
+[ext_resource type="Texture2D" uid="uid://c0okdv36uhey1" path="res://UI/upArrow.png" id="4_2yrnb"]
+[ext_resource type="Texture2D" uid="uid://dwayfjpqn38hq" path="res://UI/downArrow.png" id="5_dt5jb"]
+[ext_resource type="Texture2D" uid="uid://c0gcm7cuu6gmq" path="res://UI/rightArrow.png" id="6_h5ncc"]
+[ext_resource type="Texture2D" uid="uid://c1ub4bgqe6rt6" path="res://UI/leftArrow.png" id="7_00i7j"]
+[ext_resource type="Texture2D" uid="uid://bp6cjuj1ioqwy" path="res://UI/Enter Key.png" id="8_2qggt"]
 
 [node name="Options_Menu" type="Control"]
 layout_mode = 3
@@ -15,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_farsn")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -22,7 +24,7 @@ offset_left = 333.0
 offset_top = 16.0
 offset_right = 807.0
 offset_bottom = 135.0
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 86
 text = "CONTROLS"
 horizontal_alignment = 1
@@ -34,7 +36,7 @@ offset_left = 31.0
 offset_top = 133.0
 offset_right = 505.0
 offset_bottom = 252.0
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 64
 text = "player 1"
 horizontal_alignment = 1
@@ -53,7 +55,7 @@ offset_left = 110.0
 offset_top = 20.0
 offset_right = 206.0
 offset_bottom = 112.0
-texture = ExtResource("2_7fegs")
+texture = ExtResource("3_a42be")
 
 [node name="Label" type="Label" parent="Player1/TextureRect5/TextureRect"]
 layout_mode = 0
@@ -62,7 +64,7 @@ offset_top = -7.0
 offset_right = 95.0
 offset_bottom = 119.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 90
 text = "W"
 
@@ -72,7 +74,7 @@ offset_left = 110.0
 offset_top = 105.0
 offset_right = 206.0
 offset_bottom = 197.0
-texture = ExtResource("2_7fegs")
+texture = ExtResource("3_a42be")
 
 [node name="Label" type="Label" parent="Player1/TextureRect5/TextureRect2"]
 offset_left = 25.0
@@ -80,7 +82,7 @@ offset_top = -7.0
 offset_right = 95.0
 offset_bottom = 119.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 90
 text = "S"
 
@@ -90,7 +92,7 @@ offset_left = 199.0
 offset_top = 105.0
 offset_right = 295.0
 offset_bottom = 197.0
-texture = ExtResource("2_7fegs")
+texture = ExtResource("3_a42be")
 
 [node name="Label" type="Label" parent="Player1/TextureRect5/TextureRect3"]
 offset_left = 25.0
@@ -98,7 +100,7 @@ offset_top = -7.0
 offset_right = 95.0
 offset_bottom = 119.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 90
 text = "D"
 
@@ -108,7 +110,7 @@ offset_left = 20.0
 offset_top = 105.0
 offset_right = 116.0
 offset_bottom = 197.0
-texture = ExtResource("2_7fegs")
+texture = ExtResource("3_a42be")
 
 [node name="Label" type="Label" parent="Player1/TextureRect5/TextureRect4"]
 offset_left = 25.0
@@ -116,7 +118,7 @@ offset_top = -7.0
 offset_right = 95.0
 offset_bottom = 119.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 90
 text = "A"
 
@@ -126,7 +128,7 @@ offset_left = 348.0
 offset_top = 105.0
 offset_right = 444.0
 offset_bottom = 197.0
-texture = ExtResource("2_7fegs")
+texture = ExtResource("3_a42be")
 
 [node name="Label" type="Label" parent="Player1/TextureRect5/TextureRect5"]
 layout_mode = 0
@@ -135,7 +137,7 @@ offset_top = -7.0
 offset_right = 95.0
 offset_bottom = 119.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 90
 text = "E"
 
@@ -144,7 +146,7 @@ offset_left = 35.0
 offset_top = 285.0
 offset_right = 211.0
 offset_bottom = 404.0
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 64
 text = "WALK"
 horizontal_alignment = 1
@@ -155,7 +157,7 @@ offset_left = 270.0
 offset_top = 285.0
 offset_right = 446.0
 offset_bottom = 404.0
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 64
 text = "GRAB"
 horizontal_alignment = 1
@@ -167,7 +169,7 @@ offset_left = 643.0
 offset_top = 131.0
 offset_right = 1117.0
 offset_bottom = 250.0
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 64
 text = "player 2"
 horizontal_alignment = 1
@@ -185,7 +187,7 @@ offset_left = 110.0
 offset_top = 20.0
 offset_right = 206.0
 offset_bottom = 112.0
-texture = ExtResource("3_6o4gv")
+texture = ExtResource("4_2yrnb")
 
 [node name="TextureRect2" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
@@ -193,7 +195,7 @@ offset_left = 110.0
 offset_top = 105.0
 offset_right = 206.0
 offset_bottom = 197.0
-texture = ExtResource("4_5uknq")
+texture = ExtResource("5_dt5jb")
 
 [node name="TextureRect3" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
@@ -201,7 +203,7 @@ offset_left = 199.0
 offset_top = 105.0
 offset_right = 295.0
 offset_bottom = 197.0
-texture = ExtResource("5_hjkpg")
+texture = ExtResource("6_h5ncc")
 
 [node name="TextureRect4" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
@@ -209,7 +211,7 @@ offset_left = 20.0
 offset_top = 105.0
 offset_right = 116.0
 offset_bottom = 197.0
-texture = ExtResource("6_jn13c")
+texture = ExtResource("7_00i7j")
 
 [node name="TextureRect5" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
@@ -217,7 +219,7 @@ offset_left = 340.0
 offset_top = 24.0
 offset_right = 469.0
 offset_bottom = 208.0
-texture = ExtResource("7_gviwa")
+texture = ExtResource("8_2qggt")
 
 [node name="Label" type="Label" parent="Player2/TextureRect6/TextureRect5"]
 layout_mode = 0
@@ -226,7 +228,7 @@ offset_top = 21.0
 offset_right = 278.0
 offset_bottom = 141.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 35
 text = "Enter"
 
@@ -235,7 +237,7 @@ offset_left = 270.0
 offset_top = 285.0
 offset_right = 446.0
 offset_bottom = 404.0
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 64
 text = "GRAB"
 horizontal_alignment = 1
@@ -246,27 +248,27 @@ offset_left = 20.0
 offset_top = 285.0
 offset_right = 196.0
 offset_bottom = 404.0
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 64
 text = "WALK"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="."]
+[node name="BackButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 11.0
 offset_top = 528.0
 offset_right = 314.0
 offset_bottom = 628.0
 
-[node name="Label" type="Label" parent="Button"]
+[node name="Label" type="Label" parent="BackButton"]
 texture_filter = 1
 layout_mode = 0
 offset_left = 1.0
 offset_top = -6.0
 offset_right = 303.0
 offset_bottom = 94.0
-theme_override_fonts/font = ExtResource("1_ih8mc")
+theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 93
 text = "BACK"
 horizontal_alignment = 1

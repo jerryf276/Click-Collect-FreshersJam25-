@@ -8,7 +8,8 @@ public partial class MainMenu : Control
     private Button controlsButton;
     private Button quitButton;
 
-    private static readonly PackedScene Level = GD.Load<PackedScene>("res://Scenes/CormacShopGen2.tscn");
+    private static readonly PackedScene level = GD.Load<PackedScene>("res://Scenes/CormacShopGen2.tscn");
+    private static readonly PackedScene controlsScreen = GD.Load<PackedScene>("res://Scenes/ControlsScreen.tscn");
 
 
     public override void _Ready()
@@ -28,7 +29,7 @@ public partial class MainMenu : Control
 
     private void OnSinglePlayerPressed()
     {
-        GetTree().ChangeSceneToPacked(Level);
+        GetTree().ChangeSceneToPacked(level);
     }
 
 
@@ -39,7 +40,7 @@ public partial class MainMenu : Control
 
     private void OnControlsPressed()
     {
-
+        GetTree().ChangeSceneToPacked(controlsScreen);
     }
 
 
