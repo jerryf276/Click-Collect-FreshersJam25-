@@ -134,11 +134,16 @@ public partial class ShopGenerator : Node
     RandomNumberGenerator rng = new RandomNumberGenerator();
 
     // For items inside shelves
-    const string ITEM_DICT_FILE = "";
-    System.Collections.Generic.Dictionary<Shelf.ShelfType, List<string>> itemsByShelfType;
+    const string ITEM_DICT_FILE = "res://ItemDictionary.txt";
+    System.Collections.Generic.Dictionary<Shelf.ShelfType, List<string>> itemsByShelfType = new System.Collections.Generic.Dictionary<Shelf.ShelfType, List<string>>();
 
     public override void _Ready()
     {
+        if (Engine.IsEditorHint()) return;
+
+        ReloadItemDictionary();
+
+        FullRefreshTilemap();
     }
 
     public override void _Process(double delta)
@@ -161,6 +166,12 @@ public partial class ShopGenerator : Node
                 }
                 else {
                     tilePossibilities[x, y] = new Tile[10] { Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V };
+                }
+
+                // Very specifically overwrite 0,2 to be a floor
+                if (x == 0 && y == 2) {
+                    tiledata[x, y] = Tile.FLOOR;
+                    tilePossibilities[x, y] = new Tile[0];
                 }
             }
         }
@@ -208,12 +219,46 @@ public partial class ShopGenerator : Node
             for (int y = 0; y < tiledata.GetLength(1); y++)
             {
                 tilemap.SetCell(new Vector2I(x, y), 1, Vector2I.Zero, tilesInMap[tiledata[x, y]].X);
+                Callable.From(() =>
+                {
+                    if (!Engine.IsEditorHint())
+                    {
+                        // Create dictionary of already chosen items
+                        System.Collections.Generic.Dictionary<Shelf.ShelfType, HashSet<string>> chosenItems = new System.Collections.Generic.Dictionary<Shelf.ShelfType, HashSet<string>>();
+
+                        // TODO move this
+                        const int maxItemsPerShelfType = 2;
+                        for (int i = 0; i < tilemap.GetChildren().Count; i++)
+                        {
+                            if (tilemap.GetChildOrNull<Shelf>(i) != null)
+                            {
+                                Shelf thisShelf = tilemap.GetChild<Shelf>(i);
+                                if (itemsByShelfType[thisShelf.myType] != null && itemsByShelfType[thisShelf.myType].Count > 0)
+                                {
+                                    if (!chosenItems.ContainsKey(thisShelf.myType)) chosenItems.Add(thisShelf.myType, new HashSet<string>());
+
+                                    // Use an item from chosen items if we are full
+                                    if (chosenItems[thisShelf.myType].Count >= maxItemsPerShelfType)
+                                    {
+                                        thisShelf.Contains = chosenItems[thisShelf.myType].ToArray()[rng.RandiRange(0, chosenItems[thisShelf.myType].Count - 1)];
+                                    }
+                                    // Otherwise use an item from the dictionary and add it to our chosen items
+                                    else
+                                    {
+                                        thisShelf.Contains = itemsByShelfType[thisShelf.myType][rng.RandiRange(0, itemsByShelfType[thisShelf.myType].Count - 1)];
+                                        chosenItems[thisShelf.myType].Add(thisShelf.Contains);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }).CallDeferred();
             }
         }
     }
 
     private void FullRefreshTilemap() {
-        GenerateNewMapData(15, 11);
+        GenerateNewMapData(7, 8);
         SetTilemapBasedOnData();
     }
 
@@ -231,7 +276,7 @@ public partial class ShopGenerator : Node
 
     private void CalculateTilePossibilites(Vector2I on, Vector2I[] beenTo, bool recurse = true) {
         HashSet<Tile> currentPossibilities = new HashSet<Tile>() { Tile.FLOOR, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V };
-        GD.Print("Now checking: ", on);
+        //GD.Print("Now checking: ", on);
         // Dont check me if I am already colapsed
         if (tiledata[on.X, on.Y] == Tile.UNDEFINED)
         {
@@ -418,7 +463,7 @@ public partial class ShopGenerator : Node
                 {
                     Vector2I[] passIn = new Vector2I[beenTo.Length + 1];
                     passIn[beenTo.Length] = on;
-                    GD.Print("Going Deeper Up!");
+                    //GD.Print("Going Deeper Up!");
                     CalculateTilePossibilites(new Vector2I(on.X, on.Y - 1), passIn);
                 
                 }
@@ -426,7 +471,7 @@ public partial class ShopGenerator : Node
                 {
                     Vector2I[] passIn = new Vector2I[beenTo.Length + 1];
                     passIn[beenTo.Length] = on;
-                    GD.Print("Going Deeper Down!");
+                    //GD.Print("Going Deeper Down!");
                     CalculateTilePossibilites(new Vector2I(on.X, on.Y + 1), passIn);
                 
                 }
@@ -434,7 +479,7 @@ public partial class ShopGenerator : Node
                 {
                     Vector2I[] passIn = new Vector2I[beenTo.Length + 1];
                     passIn[beenTo.Length] = on;
-                    GD.Print("Going Deeper Left!");
+                    //GD.Print("Going Deeper Left!");
                     CalculateTilePossibilites(new Vector2I(on.X - 1, on.Y), passIn);
                 
                 }
@@ -442,14 +487,14 @@ public partial class ShopGenerator : Node
                 {
                     Vector2I[] passIn = new Vector2I[beenTo.Length + 1];
                     passIn[beenTo.Length] = on;
-                    GD.Print("Going Deeper Right!");
+                    //GD.Print("Going Deeper Right!");
                     CalculateTilePossibilites(new Vector2I(on.X + 1, on.Y), passIn);
                 
                 }
             }
             else {
                 if (tiledata[on.X, on.Y] == Tile.UNDEFINED) tilePossibilities[on.X, on.Y] = currentPossibilities.ToArray();
-                GD.Print("Finished Now!");
+                //GD.Print("Finished Now!");
             }
         }
     }
@@ -519,9 +564,19 @@ public partial class ShopGenerator : Node
     }
 
     public void ReloadItemDictionary() {
-        string jsondata = File.ReadAllText(ITEM_DICT_FILE);
+        using var file = Godot.FileAccess.Open(ITEM_DICT_FILE, Godot.FileAccess.ModeFlags.Read);
+        string jsondata = file.GetAsText();
         Json json = new Json();
         json.Parse(jsondata);
 
+        itemsByShelfType.Clear();
+
+        foreach (Variant typeAndItemPair in (Array<Variant>)json.Data) {
+            string[] typeAndItem = typeAndItemPair.AsStringArray();
+            if (!itemsByShelfType.ContainsKey((Shelf.ShelfType)typeAndItem[0].ToInt())) itemsByShelfType.Add((Shelf.ShelfType)typeAndItem[0].ToInt(), new List<string>());
+            if (itemsByShelfType[(Shelf.ShelfType)typeAndItem[0].ToInt()] == null) itemsByShelfType[(Shelf.ShelfType)(typeAndItem[0].ToInt())] = new List<string>();
+            itemsByShelfType[(Shelf.ShelfType)(typeAndItem[0].ToInt())].Add(typeAndItem[1]);
+            GD.Print(typeAndItem);
+        }
     }
 }
