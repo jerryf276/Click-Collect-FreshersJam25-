@@ -7,6 +7,9 @@ public partial class MainMenu : Control
     private Button multiPlayerButton;
     private Button controlsButton;
     private Button quitButton;
+   
+
+    //public Node GameManager;
 
     private static readonly PackedScene level = GD.Load<PackedScene>("res://Scenes/CormacShopGen2.tscn");
     private static readonly PackedScene controlsScreen = GD.Load<PackedScene>("res://Scenes/ControlsScreen.tscn");
@@ -19,7 +22,7 @@ public partial class MainMenu : Control
         controlsButton = GetNode<Button>("TextureRect/MarginContainer/HBoxContainer/VBoxContainer/Controls_Button");
         quitButton = GetNode<Button>("TextureRect/MarginContainer/HBoxContainer/VBoxContainer/Quit_Button");
 
-
+       
         singlePlayerButton.ButtonDown += OnSinglePlayerPressed;
         multiPlayerButton.ButtonDown += OnMultiPlayerPressed;
         controlsButton.ButtonDown += OnControlsPressed;
@@ -29,13 +32,14 @@ public partial class MainMenu : Control
 
     private void OnSinglePlayerPressed()
     {
-        GetTree().ChangeSceneToPacked(level);
+       GameManager.OnSoloStart();
+        
     }
 
 
     private void OnMultiPlayerPressed()
     {
-
+        GameManager.OnDuoStart();
     }
 
     private void OnControlsPressed()
