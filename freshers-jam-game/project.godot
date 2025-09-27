@@ -11,9 +11,7 @@ config_version=5
 [application]
 
 config/name="Freshers Jam Game"
-
-run/main_scene="uid://b4udap2hj63ou"
-
+run/main_scene="uid://56ls0751u3rg"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
