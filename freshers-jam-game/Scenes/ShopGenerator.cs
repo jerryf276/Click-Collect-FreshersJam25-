@@ -24,10 +24,41 @@ public partial class ShopGenerator : Node
     [Export]
     Godot.Collections.Dictionary<Tile, Vector2I> tilesInMap;
 
+    static private Tile[] ReturnCrossoverValues(Tile[] a, Tile[] b)
+    {
+        HashSet<Tile> result = new HashSet<Tile>(a);
+        for (int i = 0; i < a.Length; i++)
+        {
+            bool included = false;
+            for (int j = 0; j < b.Length; j++)
+            {
+                if (a[i] == b[j])
+                {
+                    included = true; break;
+                }
+            }
+            if (!included) result.Remove(a[i]);
+        }
+        return result.ToArray();
+    }
+
     struct DirectionAllowance
     {
         public Tile[] Up, Down, Left, Right;
+        public Tile[] GetDirectionOpposite(Vector2I direction) {
+            if (direction == new Vector2I(1, 0)) return Left;
+            else if (direction == new Vector2I(-1, 0)) return Right;
+            else if (direction == new Vector2I(0, 1)) return Up;
+            else if (direction == new Vector2I(0, -1)) return Down;
+            else if (direction == new Vector2I(-1, -1)) return ReturnCrossoverValues(Down, Right);
+            else if (direction == new Vector2I(1, -1)) return ReturnCrossoverValues(Down, Left);
+            else if (direction == new Vector2I(-1, 1)) return ReturnCrossoverValues(Up, Right);
+            else if (direction == new Vector2I(1, 1)) return ReturnCrossoverValues(Up, Left);
+            return System.Array.Empty<Tile>();
+        }
     }
+
+    
 
     System.Collections.Generic.Dictionary<Tile, DirectionAllowance> allowedTiles = new System.Collections.Generic.Dictionary<Tile, DirectionAllowance>{
         { Tile.FLOOR, new DirectionAllowance{
@@ -152,6 +183,7 @@ public partial class ShopGenerator : Node
         // Dont check me if I am already colapsed
         if (tiledata[on.X, on.Y] == Tile.UNDEFINED)
         {
+            /*
             // Check above
             if (on.Y - 1 >= 0)
             {
@@ -287,8 +319,45 @@ public partial class ShopGenerator : Node
                     }
                     if (!included) currentPossibilities.Remove(overallAllowed);
                 }
+            }*/
+
+            // Check above
+            if (on.Y - 1 >= 0)
+            {
+                UpdateCurrentPosibilities(ref currentPossibilities, on, on + new Vector2I(0, -1));
+                if (on.X + 1 < tilePossibilities.GetLength(0))
+                {
+                    UpdateCurrentPosibilities(ref currentPossibilities, on, on + new Vector2I(1, -1));
+                }
             }
-        
+            // Check below
+            if (on.Y + 1 < tilePossibilities.GetLength(1))
+            {
+                UpdateCurrentPosibilities(ref currentPossibilities, on, on + new Vector2I(0, 1));
+                if (on.X - 1 >= 0)
+                {
+                    UpdateCurrentPosibilities(ref currentPossibilities, on, on + new Vector2I(-1, 1));
+                }
+            }
+            // Check left
+            if (on.X - 1 >= 0)
+            {
+                UpdateCurrentPosibilities(ref currentPossibilities, on, on + new Vector2I(-1, 0));
+                if (on.Y - 1 >= 0)
+                {
+                    UpdateCurrentPosibilities(ref currentPossibilities, on, on + new Vector2I(-1, -1));
+                }
+            }
+            // Check right
+            if (on.X + 1 < tilePossibilities.GetLength(0))
+            {
+                UpdateCurrentPosibilities(ref currentPossibilities, on, on + new Vector2I(1, 0));
+                if (on.Y + 1 < tilePossibilities.GetLength(1))
+                {
+                    UpdateCurrentPosibilities(ref currentPossibilities, on, on + new Vector2I(1, 1));
+                }
+            }
+
             // Time to check my neighbours if I have changed
             if (recurse && !currentPossibilities.SetEquals(new HashSet<Tile>(tilePossibilities[on.X, on.Y])))
             {
@@ -330,6 +399,39 @@ public partial class ShopGenerator : Node
                 if (tiledata[on.X, on.Y] == Tile.UNDEFINED) tilePossibilities[on.X, on.Y] = currentPossibilities.ToArray();
                 GD.Print("Finished Now!");
             }
+        }
+    }
+
+    private void UpdateCurrentPosibilities(ref HashSet<Tile> posibilities, Vector2I from, Vector2I check) {
+        HashSet<Tile> possibilitiesThisDirection = new HashSet<Tile>();
+        if (tiledata[check.X, check.Y] == Tile.UNDEFINED)
+        {
+            foreach (Tile tile in tilePossibilities[check.X, check.Y])
+            {
+                foreach (Tile allowedTile in allowedTiles[tile].GetDirectionOpposite(check - from))
+                {
+                    possibilitiesThisDirection.Add(allowedTile);
+                }
+            }
+        }
+        else
+        {
+            foreach (Tile allowedTile in allowedTiles[tiledata[check.X, check.Y]].GetDirectionOpposite(check - from))
+            {
+                possibilitiesThisDirection.Add(allowedTile);
+            }
+        }
+        foreach (Tile overallAllowed in posibilities)
+        {
+            bool included = false;
+            foreach (Tile allowed in possibilitiesThisDirection)
+            {
+                if (allowed == overallAllowed)
+                {
+                    included = true; break;
+                }
+            }
+            if (!included) posibilities.Remove(overallAllowed);
         }
     }
 
