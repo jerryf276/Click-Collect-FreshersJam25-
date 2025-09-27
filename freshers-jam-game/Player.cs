@@ -86,14 +86,17 @@ public partial class Player : Node2D
 			{
 				if (Input.IsActionPressed("pickup"))
 				{
-					if ((Node)collision.GetCollider() is Shelf)
+					if (storedInventoryNumber < maxInventoryCapacity)
 					{
-                        shelfImOn = (Shelf)collision.GetCollider();
-                        GD.Print("I collided with ", shelfImOn.Contains);
-                        storedInventory.Add(shelfImOn.Contains);
-                        storedInventoryNumber = storedInventory.Count;
-                        GD.Print(storedInventoryNumber);
-                    }
+						if ((Node)collision.GetCollider() is Shelf)
+						{
+							shelfImOn = (Shelf)collision.GetCollider();
+							GD.Print("I collided with ", shelfImOn.Contains);
+							storedInventory.Add(shelfImOn.Contains);
+							storedInventoryNumber = storedInventory.Count;
+							GD.Print(storedInventoryNumber);
+						}
+					}
 				}
 			}
 
@@ -102,14 +105,17 @@ public partial class Player : Node2D
 
 				if (Input.IsActionPressed("pickup2"))
 				{
-                    if ((Node)collision.GetCollider() is Shelf)
-                    {
-						shelfImOn = (Shelf)collision.GetCollider();
-                        GD.Print("I collided with ", shelfImOn.Contains);
-						storedInventory.Add(shelfImOn.Contains);
-						storedInventoryNumber = storedInventory.Count;
-						GD.Print(storedInventoryNumber);
-                    }
+					if (storedInventoryNumber < maxInventoryCapacity)
+					{
+						if ((Node)collision.GetCollider() is Shelf)
+						{
+							shelfImOn = (Shelf)collision.GetCollider();
+							GD.Print("I collided with ", shelfImOn.Contains);
+							storedInventory.Add(shelfImOn.Contains);
+							storedInventoryNumber = storedInventory.Count;
+							GD.Print(storedInventoryNumber);
+						}
+					}
                 }
 			}
 		}
