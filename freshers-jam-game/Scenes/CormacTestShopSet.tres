@@ -1,6 +1,25 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cpukuftv7e2nq"]
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://cpukuftv7e2nq"]
 
+[ext_resource type="Texture2D" uid="uid://yc10rblhwiyt" path="res://Tiles/DebugBlocksTiles/ContextualDebug.png" id="1_e6n6c"]
 [ext_resource type="Texture2D" uid="uid://jslvuhup73mh" path="res://Tiles/DebugBlocksTiles/together.png" id="1_uojsc"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ug5hw"]
+texture = ExtResource("1_e6n6c")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_e6n6c"]
+resource_name = "TileScenes"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e6n6c"]
 texture = ExtResource("1_uojsc")
@@ -17,3 +36,5 @@ texture = ExtResource("1_uojsc")
 
 [resource]
 sources/21 = SubResource("TileSetAtlasSource_e6n6c")
+sources/0 = SubResource("TileSetAtlasSource_ug5hw")
+sources/1 = SubResource("TileSetScenesCollectionSource_e6n6c")

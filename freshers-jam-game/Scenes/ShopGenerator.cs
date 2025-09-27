@@ -17,31 +17,33 @@ public partial class ShopGenerator : Node
       UNDEFINED,
       FLOOR,
       WALL,
-      SHELF_H,
-      SHELF_V
+      FRIDGE_H,
+      FRIDGE_V,
+      FREEZER_H,
+      FREEZER_V,
+      VEGTABLE_H,
+      VEGTABLE_V,
+      BREAD_H,
+      BREAD_V
     };
 
     [Export]
     Godot.Collections.Dictionary<Tile, Vector2I> tilesInMap;
 
+    // Tool for returning values which appear in both arrays. 
     static private Tile[] ReturnCrossoverValues(Tile[] a, Tile[] b)
     {
-        HashSet<Tile> result = new HashSet<Tile>(a);
-        for (int i = 0; i < a.Length; i++)
-        {
-            bool included = false;
-            for (int j = 0; j < b.Length; j++)
-            {
-                if (a[i] == b[j])
-                {
-                    included = true; break;
-                }
-            }
-            if (!included) result.Remove(a[i]);
+        HashSet<Tile> hashA = new HashSet<Tile>(a);
+        HashSet<Tile> hashB = new HashSet<Tile>(b);
+
+        for (int i = 0; i < a.Length; i++) {
+            if (!hashB.Contains(a[i])) hashA.Remove(a[i]);
         }
-        return result.ToArray();
+
+        return hashA.ToArray();
     }
 
+    // Direction allowance struct
     struct DirectionAllowance
     {
         public Tile[] Up, Down, Left, Right;
@@ -59,31 +61,68 @@ public partial class ShopGenerator : Node
     }
 
     
-
+    // List of allowed tiles, diagonally it must match say Up and Right rules. 
     System.Collections.Generic.Dictionary<Tile, DirectionAllowance> allowedTiles = new System.Collections.Generic.Dictionary<Tile, DirectionAllowance>{
         { Tile.FLOOR, new DirectionAllowance{
-            Up = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_V, Tile.SHELF_H},
-            Down = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_V, Tile.SHELF_H},
-            Left = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_V, Tile.SHELF_H},
-            Right = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_V, Tile.SHELF_H}
+            Up = new Tile[10]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V},
+            Down = new Tile[10]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V },
+            Left = new Tile[10] { Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V },
+            Right = new Tile[10] { Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V }
         } },
         { Tile.WALL, new DirectionAllowance{
-            Up = new Tile[3]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_V},
-            Down = new Tile[3]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_V},
-            Left = new Tile[3]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_H},
-            Right = new Tile[3]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_H}
+            Up = new Tile[6]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FREEZER_V, Tile.VEGTABLE_V, Tile.BREAD_V},
+            Down = new Tile[6]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FREEZER_V, Tile.VEGTABLE_V, Tile.BREAD_V},
+            Left = new Tile[6]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.VEGTABLE_H, Tile.BREAD_H},
+            Right = new Tile[6]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.VEGTABLE_H, Tile.BREAD_H }
         } },
-        { Tile.SHELF_V, new DirectionAllowance{
-            Up = new Tile[3]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_V},
-            Down = new Tile[3]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_V},
+        { Tile.FRIDGE_V, new DirectionAllowance{
+            Up = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FREEZER_V},
+            Down = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FREEZER_V},
             Left = new Tile[1]{ Tile.FLOOR},
             Right = new Tile[1]{ Tile.FLOOR}
         } },
-        { Tile.SHELF_H, new DirectionAllowance{
+        { Tile.FRIDGE_H, new DirectionAllowance{
             Up = new Tile[1]{ Tile.FLOOR},
             Down = new Tile[1]{ Tile.FLOOR},
-            Left = new Tile[3]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_H},
-            Right = new Tile[3]{ Tile.FLOOR, Tile.WALL, Tile.SHELF_H }
+            Left = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_H, Tile.FREEZER_H},
+            Right = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_H, Tile.FREEZER_H}
+        } }
+        ,
+        { Tile.FREEZER_V, new DirectionAllowance{
+            Up = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FREEZER_V},
+            Down = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FREEZER_V},
+            Left = new Tile[1]{ Tile.FLOOR},
+            Right = new Tile[1]{ Tile.FLOOR}
+        } },
+        { Tile.FREEZER_H, new DirectionAllowance{
+            Up = new Tile[1]{ Tile.FLOOR},
+            Down = new Tile[1]{ Tile.FLOOR},
+            Left = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_H, Tile.FREEZER_H},
+            Right = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.FRIDGE_H, Tile.FREEZER_H}
+        } },
+        { Tile.VEGTABLE_V, new DirectionAllowance{
+            Up = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.VEGTABLE_V, Tile.BREAD_V},
+            Down = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.VEGTABLE_V, Tile.BREAD_V},
+            Left = new Tile[1]{ Tile.FLOOR},
+            Right = new Tile[1]{ Tile.FLOOR}
+        } },
+        { Tile.VEGTABLE_H, new DirectionAllowance{
+            Up = new Tile[1]{ Tile.FLOOR},
+            Down = new Tile[1]{ Tile.FLOOR},
+            Left = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.VEGTABLE_H, Tile.BREAD_H},
+            Right = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.VEGTABLE_H, Tile.BREAD_H }
+        } },
+        { Tile.BREAD_V, new DirectionAllowance{
+            Up = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.VEGTABLE_V, Tile.BREAD_V},
+            Down = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.VEGTABLE_V, Tile.BREAD_V},
+            Left = new Tile[1]{ Tile.FLOOR},
+            Right = new Tile[1]{ Tile.FLOOR}
+        } },
+        { Tile.BREAD_H, new DirectionAllowance{
+            Up = new Tile[1]{ Tile.FLOOR},
+            Down = new Tile[1]{ Tile.FLOOR},
+            Left = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.VEGTABLE_H, Tile.BREAD_H},
+            Right = new Tile[4]{ Tile.FLOOR, Tile.WALL, Tile.VEGTABLE_H, Tile.BREAD_H }
         } }
     };
 
@@ -115,7 +154,7 @@ public partial class ShopGenerator : Node
                     tilePossibilities[x, y] = new Tile[0];
                 }
                 else {
-                    tilePossibilities[x, y] = new Tile[3] { Tile.FLOOR, Tile.SHELF_V, Tile.SHELF_H };
+                    tilePossibilities[x, y] = new Tile[10] { Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V };
                 }
             }
         }
@@ -155,13 +194,13 @@ public partial class ShopGenerator : Node
         for (int x = 0; x < tiledata.GetLength(0); x++) {
             for (int y = 0; y < tiledata.GetLength(1); y++)
             {
-                tilemap.SetCell(new Vector2I(x, y), 21, tilesInMap[tiledata[x, y]]);
+                tilemap.SetCell(new Vector2I(x, y), 0, tilesInMap[tiledata[x, y]]);
             }
         }
     }
 
     private void FullRefreshTilemap() {
-        GenerateNewMapData(30, 30);
+        GenerateNewMapData(15, 11);
         SetTilemapBasedOnData();
     }
 
@@ -178,7 +217,7 @@ public partial class ShopGenerator : Node
     }
 
     private void CalculateTilePossibilites(Vector2I on, Vector2I[] beenTo, bool recurse = true) {
-        HashSet<Tile> currentPossibilities = new HashSet<Tile>() { Tile.FLOOR, Tile.SHELF_V, Tile.SHELF_H };
+        HashSet<Tile> currentPossibilities = new HashSet<Tile>() { Tile.FLOOR, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V };
         GD.Print("Now checking: ", on);
         // Dont check me if I am already colapsed
         if (tiledata[on.X, on.Y] == Tile.UNDEFINED)
