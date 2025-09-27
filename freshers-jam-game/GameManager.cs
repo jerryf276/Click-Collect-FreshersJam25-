@@ -41,7 +41,14 @@ public partial class GameManager : Node2D
             scene = ResourceLoader.Load<PackedScene>("res://MainMenu.tscn");
         }
         Node menuScene = scene.Instantiate();
-        instance.GetTree().Root.AddChild(menuScene);
+        if (scene != null)
+        {
+            instance.AddChild(menuScene);
+        }
+        else
+        {
+            GD.Print("err scene empty");
+        }
     }
 
 
