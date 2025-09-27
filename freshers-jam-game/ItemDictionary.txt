@@ -1,0 +1,29 @@
+[
+	["0", "Milk"],
+	["0", "Eggs"],
+	["0", "Single Cream"],
+	["0", "Double Cream"],
+	["0", "Cheese"],
+	["0", "Ham"],
+	
+	["1", "Pizza"],
+	["1", "Chips"],
+	["1", "Ice Cream"],
+	["1", "Ice Lollies"],
+	["1", "Frozen Peas"],
+	["1", "Ice"],
+	
+	["2", "Carrot"],
+	["2", "Onion"],
+	["2", "Aubergine"],
+	["2", "Tomato"],
+	["2", "Potato"],
+	["2", "Cucumber"],
+	
+	["3", "White Bread"],
+	["3", "Brown Bread"],
+	["3", "Bagels"],
+	["3", "Burger Buns"],
+	["3", "Tattie Scones"],
+	["3", "Cakes"],
+]
