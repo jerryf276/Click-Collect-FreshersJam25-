@@ -10,6 +10,9 @@ public partial class Player : Node2D
 	private Vector2 lastDirection = new Vector2(1, 0);
 	[Export] private int storedInventory = 0;
 	private int maxInventoryCapacity = 5;
+
+	public Shelf shelfImOn;
+
 	public override void _Ready()
 	{
 

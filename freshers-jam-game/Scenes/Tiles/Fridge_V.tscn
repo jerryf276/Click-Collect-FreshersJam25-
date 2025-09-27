@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://btjyp4fwx6nnw"]
+
+[ext_resource type="Texture2D" uid="uid://ckyqm1yq6hf40" path="res://Tiles/DebugBlocksTiles/ContextualDebugOverhangs.png" id="1_bwmq8"]
+[ext_resource type="Script" uid="uid://cm4541s5y7vre" path="res://Scenes/Tiles/Shelf.cs" id="1_sa1ct"]
+[ext_resource type="Texture2D" uid="uid://bakujy4t1er8o" path="res://Tiles/DebugBlocksTiles/InsideBanner.png" id="3_joqej"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_own4v"]
+atlas = ExtResource("1_bwmq8")
+region = Rect2(80, 32, 16, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sa1ct"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3r8y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lukl5"]
+font_color = Color(0, 0, 0, 1)
+
+[node name="FridgeV" type="StaticBody2D"]
+script = ExtResource("1_sa1ct")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_own4v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_sa1ct")
+
+[node name="VisibilityArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisibilityArea"]
+shape = SubResource("RectangleShape2D_o3r8y")
+
+[node name="InsideBubble" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_joqej")
+
+[node name="InsideMe" type="Label" parent="InsideBubble"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 1.0
+offset_right = 31.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.195, 0.195)
+text = "Apples"
+label_settings = SubResource("LabelSettings_lukl5")
