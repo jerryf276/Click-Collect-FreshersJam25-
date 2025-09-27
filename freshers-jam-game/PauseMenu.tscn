@@ -159,21 +159,21 @@ offset_bottom = 613.0
 layout_mode = 2
 theme_override_constants/separation = 60
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_nov15")
 theme_override_font_sizes/font_size = 100
 text = "Resume"
 
-[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ControlsButton" type="Button" parent="PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_nov15")
 theme_override_font_sizes/font_size = 100
 text = "Controls"
 
-[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_nov15")
