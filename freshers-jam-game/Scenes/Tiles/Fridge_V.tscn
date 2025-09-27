@@ -34,6 +34,7 @@ shape = SubResource("RectangleShape2D_sa1ct")
 shape = SubResource("RectangleShape2D_o3r8y")
 
 [node name="InsideBubble" type="Sprite2D" parent="."]
+visible = false
 z_index = 1
 texture = ExtResource("3_joqej")
 

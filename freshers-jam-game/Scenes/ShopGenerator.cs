@@ -167,6 +167,12 @@ public partial class ShopGenerator : Node
                 else {
                     tilePossibilities[x, y] = new Tile[10] { Tile.FLOOR, Tile.WALL, Tile.FRIDGE_V, Tile.FRIDGE_H, Tile.FREEZER_H, Tile.FREEZER_V, Tile.VEGTABLE_H, Tile.VEGTABLE_V, Tile.BREAD_H, Tile.BREAD_V };
                 }
+
+                // Very specifically overwrite 0,2 to be a floor
+                if (x == 0 && y == 2) {
+                    tiledata[x, y] = Tile.FLOOR;
+                    tilePossibilities[x, y] = new Tile[0];
+                }
             }
         }
         GD.Print("Check all map");
@@ -252,7 +258,7 @@ public partial class ShopGenerator : Node
     }
 
     private void FullRefreshTilemap() {
-        GenerateNewMapData(9, 7);
+        GenerateNewMapData(7, 8);
         SetTilemapBasedOnData();
     }
 
