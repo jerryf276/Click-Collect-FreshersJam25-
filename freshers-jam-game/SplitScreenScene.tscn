@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://ciavpdwtelhf4"]
+
+[ext_resource type="Script" uid="uid://d1lek3kvrbu4h" path="res://SplitScreenManager.cs" id="1_s5sy2"]
+[ext_resource type="PackedScene" uid="uid://dx7ecrxlenx0q" path="res://Player.tscn" id="2_4w0rk"]
+[ext_resource type="Texture2D" uid="uid://jslvuhup73mh" path="res://Tiles/DebugBlocksTiles/together.png" id="3_s5sy2"]
+
+[node name="SplitScreenScene" type="Node2D"]
+script = ExtResource("1_s5sy2")
+
+[node name="SubViewportContainer1" type="SubViewportContainer" parent="."]
+offset_right = 571.0
+offset_bottom = 645.0
+
+[node name="SubViewport1" type="SubViewport" parent="SubViewportContainer1"]
+handle_input_locally = false
+size = Vector2i(500, 500)
+render_target_update_mode = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer1/SubViewport1"]
+z_index = -9
+scale = Vector2(46.67, 46.67)
+texture = ExtResource("3_s5sy2")
+
+[node name="Player1" parent="SubViewportContainer1/SubViewport1" instance=ExtResource("2_4w0rk")]
+
+[node name="Camera2D1" type="Camera2D" parent="SubViewportContainer1/SubViewport1/Player1"]
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+offset_left = 588.0
+offset_top = 3.0
+offset_right = 1150.0
+offset_bottom = 648.0
+
+[node name="SubViewport2" type="SubViewport" parent="SubViewportContainer2"]
+handle_input_locally = false
+size = Vector2i(500, 500)
+render_target_update_mode = 4
+
+[node name="Player2" parent="SubViewportContainer2/SubViewport2" instance=ExtResource("2_4w0rk")]
+position = Vector2(260, 149)
+playerNumber = 2
+
+[node name="Camera2D2" type="Camera2D" parent="SubViewportContainer2/SubViewport2/Player2"]
