@@ -1,0 +1,22 @@
+using Godot;
+using System;
+
+public partial class ControlsScreen : Control
+{
+    private Button backButton;
+    private static readonly PackedScene mainMenu = GD.Load<PackedScene>("res://Scenes/TitleScreen.tscn");
+
+    public override void _Ready()
+    {
+        backButton = GetNode<Button>("BackButton");
+
+        backButton.ButtonDown += OnBackButtonPressed;
+
+    }
+
+
+    private void OnBackButtonPressed()
+    {
+        GetTree().ChangeSceneToPacked(mainMenu);
+    }
+}
