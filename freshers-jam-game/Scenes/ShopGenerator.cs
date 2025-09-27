@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 [Tool]
@@ -131,6 +132,11 @@ public partial class ShopGenerator : Node
     Tile[,][] tilePossibilities;
 
     RandomNumberGenerator rng = new RandomNumberGenerator();
+
+    // For items inside shelves
+    const string ITEM_DICT_FILE = "";
+    System.Collections.Generic.Dictionary<Shelf.ShelfType, List<string>> itemsByShelfType;
+
     public override void _Ready()
     {
     }
@@ -510,5 +516,12 @@ public partial class ShopGenerator : Node
         else {
             return new Vector2I(-1, -1); // ERROR
         }
+    }
+
+    public void ReloadItemDictionary() {
+        string jsondata = File.ReadAllText(ITEM_DICT_FILE);
+        Json json = new Json();
+        json.Parse(jsondata);
+
     }
 }
