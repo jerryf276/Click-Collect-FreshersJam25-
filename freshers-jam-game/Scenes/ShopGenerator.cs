@@ -207,7 +207,7 @@ public partial class ShopGenerator : Node
         }
     }
 
-    public void SetTilemapBasedOnData() {
+    public void SetTilemapBasedOnData(int maxItemsPerCategory = 3) {
         for (int x = 0; x < tiledata.GetLength(0); x++)
         {
             for (int y = 0; y < tiledata.GetLength(1); y++)
@@ -226,8 +226,6 @@ public partial class ShopGenerator : Node
                         // Create dictionary of already chosen items
                         System.Collections.Generic.Dictionary<Shelf.ShelfType, HashSet<string>> chosenItems = new System.Collections.Generic.Dictionary<Shelf.ShelfType, HashSet<string>>();
 
-                        // TODO move this
-                        const int maxItemsPerShelfType = 2;
                         for (int i = 0; i < tilemap.GetChildren().Count; i++)
                         {
                             if (tilemap.GetChildOrNull<Shelf>(i) != null)
@@ -238,7 +236,7 @@ public partial class ShopGenerator : Node
                                     if (!chosenItems.ContainsKey(thisShelf.myType)) chosenItems.Add(thisShelf.myType, new HashSet<string>());
 
                                     // Use an item from chosen items if we are full
-                                    if (chosenItems[thisShelf.myType].Count >= maxItemsPerShelfType)
+                                    if (chosenItems[thisShelf.myType].Count >= maxItemsPerCategory)
                                     {
                                         thisShelf.Contains = chosenItems[thisShelf.myType].ToArray()[rng.RandiRange(0, chosenItems[thisShelf.myType].Count - 1)];
                                     }
@@ -259,7 +257,7 @@ public partial class ShopGenerator : Node
 
     private void FullRefreshTilemap() {
         GenerateNewMapData(7, 8);
-        SetTilemapBasedOnData();
+        SetTilemapBasedOnData(2);
     }
 
 
