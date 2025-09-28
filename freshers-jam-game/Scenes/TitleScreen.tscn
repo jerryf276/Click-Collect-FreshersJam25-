@@ -44,7 +44,7 @@ theme_override_constants/shadow_offset_y = 12
 theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("1_uebgo")
 theme_override_font_sizes/font_size = 88
-text = "GAME TITLE"
+text = "CLICK & COLLECT"
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -9,7 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://c1ub4bgqe6rt6" path="res://UI/leftArrow.png" id="7_00i7j"]
 [ext_resource type="Texture2D" uid="uid://bp6cjuj1ioqwy" path="res://UI/Enter Key.png" id="8_2qggt"]
 
-[node name="Options_Menu" type="Control"]
+[node name="Controls_Menu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
