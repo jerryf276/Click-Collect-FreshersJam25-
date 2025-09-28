@@ -4,3 +4,5 @@
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_p13vs")
+
+[node name="DayTime" type="Timer" parent="."]

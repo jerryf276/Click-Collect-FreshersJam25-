@@ -18,14 +18,14 @@ public partial class PauseMenu : Control
     public override void _Ready()
     {
         ResumeButton = GetNode<Button>("PanelContainer/VBoxContainer/ResumeButton");
-        ControlsButton = GetNode<Button>("PanelContainer/VBoxContainer/ControlsButton");
+      //  ControlsButton = GetNode<Button>("PanelContainer/VBoxContainer/ControlsButton");
         QuitButton = GetNode<Button>("PanelContainer/VBoxContainer/QuitButton");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
 
         QuitButton.ButtonDown += OnQuitPressed;
         ResumeButton.ButtonDown += OnResumePressed;
-        ControlsButton.ButtonDown += OnControlsPressed;
+       // ControlsButton.ButtonDown += OnControlsPressed;
 
 
     }
@@ -58,19 +58,27 @@ public partial class PauseMenu : Control
 
     private void OnQuitPressed()
     {
-        GetTree().ChangeSceneToPacked(titleScreen);
+        //GetTree().ChangeSceneToPacked(titleScreen);
+        if (GetTree().Paused == true)
+        {
+            GetTree().Paused = false;
+            GameManager.OnMainMenuTransition();
+        }
     }
 
 
     private void OnResumePressed()
     {
-        Resume();
+        if (GetTree().Paused == true)
+        {
+            Resume();
+        }
     }
 
-    private void OnControlsPressed()
-    {
-        GetTree().ChangeSceneToPacked(controlsScreen);
-    }
+    //private void OnControlsPressed()
+    //{
+    //    GetTree().ChangeSceneToPacked(controlsScreen);
+    //}
 
 
 }

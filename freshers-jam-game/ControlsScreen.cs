@@ -5,6 +5,7 @@ public partial class ControlsScreen : Control
 {
     private Button backButton;
     private static readonly PackedScene mainMenu = GD.Load<PackedScene>("res://Scenes/TitleScreen.tscn");
+    private PackedScene previousScene;
 
     public override void _Ready()
     {
@@ -17,6 +18,21 @@ public partial class ControlsScreen : Control
 
     private void OnBackButtonPressed()
     {
-        GetTree().ChangeSceneToPacked(mainMenu);
+
+        //if (GetTree().CurrentScene.Name == "TitleScreen") { }
+        GameManager.OnMainMenuTransition();
     }
+
+
+    //public void GetPreviousScene()
+    //{
+
+   // }
+
+    public void SetPreviousScene(PackedScene prevScene)
+    {
+        previousScene = prevScene;
+    }
+
+
 }
