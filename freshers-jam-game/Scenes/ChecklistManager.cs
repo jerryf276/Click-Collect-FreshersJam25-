@@ -30,6 +30,8 @@ public partial class ChecklistManager : Node
 
     Texture2D checkmarkTexture;
 
+    private AudioStreamPlayer listDone;
+
     public override void _Ready()
     {
         checkmarkTexture = ResourceLoader.Load<Texture2D>("res://Tiles/Checkmarks.png");
@@ -51,6 +53,8 @@ public partial class ChecklistManager : Node
                 if(CheckListCompletion()) GenerateNewList();
             }
         };
+
+        listDone = GetNode<AudioStreamPlayer>("ListDone");
     }
 
     public override void _Process(double delta)
@@ -131,6 +135,7 @@ public partial class ChecklistManager : Node
             if(kvp.Value != ChecklistItemCompletion.YES) return false;
         }
         listsCompleted++;
+        listDone.Play();
         itemsInCurrentList.Clear();
         return true;
     }

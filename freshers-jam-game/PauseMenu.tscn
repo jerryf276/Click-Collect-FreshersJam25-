@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://calxjxddftcmj"]
+[gd_scene load_steps=9 format=3 uid="uid://calxjxddftcmj"]
 
 [ext_resource type="Shader" uid="uid://s7u7xqylvs3i" path="res://PauseMenu.gdshader" id="1_etnfi"]
 [ext_resource type="FontFile" uid="uid://dxvigofj150bx" path="res://fonts/PIXY.ttf" id="1_nov15"]
 [ext_resource type="Script" uid="uid://dy8ko0m3p24tl" path="res://PauseMenu.cs" id="1_q775a"]
+[ext_resource type="AudioStream" uid="uid://dgvgh62bbsd5o" path="res://audio/Pause.mp3" id="4_qg8xq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q775a"]
 shader = ExtResource("1_etnfi")
@@ -177,3 +178,9 @@ text = "Quit"
 libraries = {
 &"": SubResource("AnimationLibrary_qg8xq")
 }
+
+[node name="buttonPressed" type="AudioStreamPlayer" parent="."]
+
+[node name="Pause" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qg8xq")
+volume_db = 3.748
