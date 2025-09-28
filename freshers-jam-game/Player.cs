@@ -7,7 +7,7 @@ public partial class Player : Node2D
 {
 	private float playerSpeed = 250;
 	[Export] private float maxPlayerSpeed = 250;
-	[Export] private int playerNumber = 1;
+	[Export] public int playerNumber = 1;
 	[Export] private CharacterBody2D player;
 	private Vector2 lastDirection = new Vector2(1, 0);
 	private int maxInventoryCapacity = 5;

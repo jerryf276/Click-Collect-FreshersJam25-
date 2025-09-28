@@ -72,6 +72,19 @@ public partial class GameManager : Node2D
         instance.Playerlist.Add(player);
     }
 
+    public static Player GetPlayers(int playernumber)
+    {
+        foreach (Player player in instance.Playerlist)
+        {
+            if (player.playerNumber == playernumber)
+            {
+                return player;
+            }
+        }
+        return null;
+       
+    }
+
     public static void OnSoloStart()
     {
         instance.currentSceneState = SceneState.IN_GAME_SOLO;
@@ -82,6 +95,7 @@ public partial class GameManager : Node2D
         Node newScene = instance.scene.Instantiate();
         instance.GetTree().Root.AddChild(newScene);
         instance.GetTree().CurrentScene = newScene;
+
     }
 
 
