@@ -22,7 +22,9 @@ public partial class Shelf : StaticBody2D
         get { return contains; }  
         set { contains = value; if (whatIContainLabel != null) {
                 whatIContainLabel.Text = value;
-                whatIContainLabel.Position = -whatIContainLabel.Size / 2.0f / 5.0f;
+                whatIContainLabel.Scale = new Vector2(0.2f, 0.2f);
+                whatIContainLabel.Position = new Vector2(-whatIContainLabel.Size.X / 10.0f, 0); // Its ten because its 0.2 scale and we need half of that.
+                
             } } 
     }
 
@@ -33,8 +35,6 @@ public partial class Shelf : StaticBody2D
             if (body.GetParent() is Player)
             {
                 GetNode<Sprite2D>("./InsideBubble").Show();
-                // TODO visually deal with overlap.
-                //body.GetParent<Player>().shelfImOn = this;
             }
         };
         GetNode<Area2D>("./VisibilityArea").BodyExited += (Node2D body) =>
@@ -42,9 +42,6 @@ public partial class Shelf : StaticBody2D
             if (body.GetParent() is Player)
             {
                 GetNode<Sprite2D>("./InsideBubble").Hide();
-
-                // Only remove if we are the shelf the player is on otherwise its some other shelf in the overlap
-                //if (body.GetParent<Player>().shelfImOn == this) body.GetParent<Player>().shelfImOn = null;
             }
         };
     }
