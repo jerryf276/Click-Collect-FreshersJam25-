@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bov1ijkwmgtll"]
+[gd_scene load_steps=9 format=3 uid="uid://bov1ijkwmgtll"]
 
 [ext_resource type="Texture2D" uid="uid://ckyqm1yq6hf40" path="res://Tiles/DebugBlocksTiles/ContextualDebugOverhangs.png" id="1_f1stt"]
 [ext_resource type="Script" uid="uid://cm4541s5y7vre" path="res://Scenes/Tiles/Shelf.cs" id="1_ru8ho"]
 [ext_resource type="Texture2D" uid="uid://bakujy4t1er8o" path="res://Tiles/DebugBlocksTiles/InsideBanner.png" id="3_8v6qq"]
+[ext_resource type="FontFile" uid="uid://dxvigofj150bx" path="res://fonts/PIXY.ttf" id="4_8v6qq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_own4v"]
 atlas = ExtResource("1_f1stt")
@@ -49,5 +50,6 @@ offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.195, 0.195)
+theme_override_fonts/font = ExtResource("4_8v6qq")
 text = "Apples"
 label_settings = SubResource("LabelSettings_spgs4")
