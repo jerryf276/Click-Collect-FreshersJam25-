@@ -57,8 +57,24 @@ public partial class ChecklistManager : Node
     {
         foreach (KeyValuePair<string, ChecklistItemCompletion> kvp in itemsInCurrentList)
         {
+            ChecklistItemCompletion myAlteredKVPValue = kvp.Value;
+            if (GameManager.GetPlayers(1) != null) {
+                if (GameManager.GetPlayers(1).storedInventory.Contains(kvp.Key) && kvp.Value != ChecklistItemCompletion.YES) {
+                    myAlteredKVPValue = ChecklistItemCompletion.HELD;
+                }
+            }
+            if (GameManager.GetPlayers(2) != null)
+            {
+                if (GameManager.GetPlayers(2).storedInventory.Contains(kvp.Key) && kvp.Value != ChecklistItemCompletion.YES)
+                {
+                    myAlteredKVPValue = ChecklistItemCompletion.HELD;
+                }
+            }
+
+
+
             HBoxContainer container = checklistUI.GetNode<Control>("./Margin/VBox").GetNode<HBoxContainer>(kvp.Key);
-            switch (kvp.Value) {
+            switch (myAlteredKVPValue) {
                 case ChecklistItemCompletion.NO:
                     ((AtlasTexture)container.GetNode<TextureRect>("./Icon").Texture).Region = new Rect2(0, 32, 16, 16);
                     break;
