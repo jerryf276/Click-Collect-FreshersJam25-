@@ -20,7 +20,7 @@ public partial class Player : Node2D
 
 	public override void _Ready()
 	{
-
+		GameManager.AddtoPlayer(this);
 	}
 	public override void _PhysicsProcess(double delta)
 	{

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 
@@ -29,10 +30,12 @@ public partial class GameManager : Node2D
     PackedScene scene;
     Node currentScene;
 
+    public List<Player> Playerlist = new List<Player>();
+
     SceneState currentSceneState;
 
     string MAIN_MENU_SCENE = "res://Scenes/TitleScreen.tscn";
-  
+
 
 
 
@@ -43,7 +46,7 @@ public partial class GameManager : Node2D
         DisplayServer.WindowSetTitle("Click & collect");
 
         currentSceneState = SceneState.MAIN_MENU;
-        if(currentSceneState == SceneState.MAIN_MENU)
+        if (currentSceneState == SceneState.MAIN_MENU)
         {
             scene = ResourceLoader.Load<PackedScene>(MAIN_MENU_SCENE);
         }
@@ -61,7 +64,12 @@ public partial class GameManager : Node2D
 
     public override void _Process(double delta)
     {
-       
+
+    }
+
+    public static void AddtoPlayer(Player player)
+    {
+        instance.Playerlist.Add(player);
     }
 
     public static void OnSoloStart()
@@ -91,8 +99,12 @@ public partial class GameManager : Node2D
 
     static void OnMainMenuTransition()
     {
-        
-
+        instance.Playerlist.Clear();
+        instance.currentSceneState = SceneState.MAIN_MENU;
+        if (instance.currentSceneState == SceneState.MAIN_MENU)
+        {
+            instance.scene = ResourceLoader.Load<PackedScene>(instance.MAIN_MENU_SCENE);
+        }
     }
 
 
