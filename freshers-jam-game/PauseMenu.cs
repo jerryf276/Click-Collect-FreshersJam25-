@@ -15,6 +15,9 @@ public partial class PauseMenu : Control
     private static readonly PackedScene controlsScreen = GD.Load<PackedScene>("res://Scenes/ControlsScreen.tscn");
     //private PackedScene currentScene;
 
+    AudioStreamPlayer buttonPressed;
+    AudioStreamPlayer Paused;
+
     public override void _Ready()
     {
         ResumeButton = GetNode<Button>("PanelContainer/VBoxContainer/ResumeButton");
@@ -25,9 +28,10 @@ public partial class PauseMenu : Control
 
         QuitButton.ButtonDown += OnQuitPressed;
         ResumeButton.ButtonDown += OnResumePressed;
-       // ControlsButton.ButtonDown += OnControlsPressed;
+        // ControlsButton.ButtonDown += OnControlsPressed;
 
-
+        buttonPressed = GetNode<AudioStreamPlayer>("ButtonPressed");
+        Paused = GetNode<AudioStreamPlayer>("Pause");
     }
 
     public override void _Process(double delta)
@@ -47,12 +51,14 @@ public partial class PauseMenu : Control
         GetTree().Paused = false;
         // AnimationPlayer.
         animationPlayer.PlayBackwards("blur");
+        buttonPressed.Play();
     }
 
     private void Pause()
     {
         GetTree().Paused = true;
         animationPlayer.Play("blur");
+        Paused.Play();
     }
 
 

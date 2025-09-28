@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://56ls0751u3rg"]
+[gd_scene load_steps=6 format=3 uid="uid://56ls0751u3rg"]
 
 [ext_resource type="FontFile" uid="uid://dxvigofj150bx" path="res://fonts/PIXY.ttf" id="1_uebgo"]
 [ext_resource type="Script" uid="uid://c3t182u7rf5ri" path="res://Scenes/MainMenu.cs" id="1_vmg2h"]
 [ext_resource type="AudioStream" uid="uid://jgaenpyppr2s" path="res://audio/titleScreenMusic.mp3" id="3_8l4an"]
+[ext_resource type="AudioStream" uid="uid://pu7gxjc2ibjo" path="res://audio/buttonPressed.mp3" id="4_n15yj"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8l4an"]
 specular_color = Color(0.198666, 0.463625, 0.962422, 1)
@@ -95,3 +96,6 @@ layout_mode = 2
 [node name="TitleMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_8l4an")
 autoplay = true
+
+[node name="ButtonPressed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_n15yj")
