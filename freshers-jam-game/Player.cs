@@ -20,6 +20,7 @@ public partial class Player : Node2D
 
 	private AnimationPlayer playerAnimation;
 	private Sprite2D playerSprite;
+	private Texture2D player2Texture;
 
 	public override void _Ready()
 	{
@@ -27,6 +28,13 @@ public partial class Player : Node2D
 		sfxCollect = GetNode<AudioStreamPlayer>("sfx_collect");
 		playerAnimation = GetNode<AnimationPlayer>("CharacterBody2D/Sprite2D/AnimationPlayer");
 		playerSprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
+		player2Texture = GD.Load<Texture2D>("res://Sprites/thumbnail_Karen_WalkingRight2.png");
+
+		if (playerNumber == 2)
+		{
+			playerSprite.Texture = player2Texture;
+		}
+
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -73,6 +81,7 @@ public partial class Player : Node2D
 		//else if (inventorySize == 2)
 
 		Vector2 velocity = player.Velocity;
+		//playerSprite.Texture = ResourceLoader.Load("");
 
 
 		player.Velocity = direction * playerSpeed;
