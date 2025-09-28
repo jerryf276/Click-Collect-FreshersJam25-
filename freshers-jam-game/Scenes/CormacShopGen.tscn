@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://cdpwh4yohbv5o"]
+[gd_scene load_steps=11 format=4 uid="uid://cdpwh4yohbv5o"]
 
 [ext_resource type="PackedScene" uid="uid://burgd3s83xa3o" path="res://UI/Checklist.tscn" id="1_comkp"]
 [ext_resource type="TileSet" uid="uid://cpukuftv7e2nq" path="res://Scenes/CormacTestShopSet.tres" id="1_qfsg4"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dixwd58qni5gt" path="res://audio/listDone.mp3" id="5_ub8qo"]
 [ext_resource type="PackedScene" uid="uid://calxjxddftcmj" path="res://PauseMenu.tscn" id="6_e2bt4"]
 [ext_resource type="AudioStream" uid="uid://cg0er6cxpy0gu" path="res://audio/GameMusic.mp3" id="8_d6ao8"]
+[ext_resource type="PackedScene" uid="uid://votv86sjclyc" path="res://GameOverScreen.tscn" id="9_8oqob"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_comkp"]
 size = Vector2(200, 200)
@@ -67,6 +68,7 @@ position = Vector2(-124, 192)
 shape = SubResource("RectangleShape2D_comkp")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="PauseMenu" parent="CanvasLayer2" instance=ExtResource("6_e2bt4")]
 
@@ -74,3 +76,7 @@ shape = SubResource("RectangleShape2D_comkp")
 stream = ExtResource("8_d6ao8")
 volume_db = -5.622
 autoplay = true
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+
+[node name="GameOverScreen" parent="CanvasLayer3" instance=ExtResource("9_8oqob")]
