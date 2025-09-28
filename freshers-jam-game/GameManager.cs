@@ -41,9 +41,9 @@ public partial class GameManager : Node2D
     public int dayNum=1;
     public int itemsPerCat=2;
     public int MapSize = 10;
-    public int totalItemsDelivered;
-    public int totalDaysCompleted;
-    public int totalListsCompleted;
+    public int totalItemsDelivered = 0;
+    public int totalDaysCompleted = 0;
+    public int totalListsCompleted = 0;
 
     public List<Player> Playerlist = new List<Player>();
 
