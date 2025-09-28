@@ -13,6 +13,8 @@ public partial class GameOverScreen : Control
 
     bool gameQuit = false;
 
+    public int daysCompleted;
+
     public override void _Ready()
     {
         QuitButton = GetNode<Button>("QuitButton");
