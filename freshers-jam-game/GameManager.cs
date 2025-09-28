@@ -29,6 +29,15 @@ public partial class GameManager : Node2D
 
     PackedScene scene;
     Node currentScene;
+    Timer dayTimer;
+    ShopGenerator shopGenerator;
+    Node menuScene;
+
+    public int quota;
+    public int currentProgress;
+    public int dayNum=1;
+    public int itemsPerCat=2;
+    public int MapSize = 10;
 
     public List<Player> Playerlist = new List<Player>();
 
@@ -45,26 +54,51 @@ public partial class GameManager : Node2D
 
         DisplayServer.WindowSetTitle("Click & collect");
 
+        dayTimer = GetNode<Timer>("DayTime");
+        instance.dayTimer.WaitTime = 100;
+
         currentSceneState = SceneState.MAIN_MENU;
+       
         if (currentSceneState == SceneState.MAIN_MENU)
         {
             scene = ResourceLoader.Load<PackedScene>(MAIN_MENU_SCENE);
         }
-        Node menuScene = scene.Instantiate();
+        menuScene = scene.Instantiate();
         if (scene != null)
         {
             instance.AddChild(menuScene);
+            currentScene = menuScene;
         }
         else
         {
             GD.Print("err scene empty");
         }
+        
     }
 
 
     public override void _Process(double delta)
     {
+        
+        if(currentProgress==quota)
+        {
+            if((dayNum & 3)==0)
+            {
+                quota++;
+                itemsPerCat = 3;
 
+            }
+            else if((dayNum&5)==0)
+            {
+                MapSize++;
+            }
+            else
+            {
+                itemsPerCat++;
+            }
+
+            onNewday(quota,MapSize,MapSize,itemsPerCat);
+        }
     }
 
     public static void AddtoPlayer(Player player)
@@ -88,7 +122,7 @@ public partial class GameManager : Node2D
     public static void OnSoloStart()
     {
         instance.currentSceneState = SceneState.IN_GAME_SOLO;
-
+        
         //note code below could be made into seprate func for code reusability
         instance.GetTree().CurrentScene.QueueFree();
         instance.scene = ResourceLoader.Load<PackedScene>("res://Scenes/CormacShopGen.tscn");
@@ -102,6 +136,7 @@ public partial class GameManager : Node2D
     static public void OnDuoStart()
     {
         instance.currentSceneState = SceneState.IN_GAME_DUO;
+        
 
         //note code below could be made into seprate func for code reusability
         instance.GetTree().CurrentScene.QueueFree();
@@ -109,17 +144,35 @@ public partial class GameManager : Node2D
         Node newScene = instance.scene.Instantiate();
         instance.GetTree().Root.AddChild(newScene);
         instance.GetTree().CurrentScene = newScene;
+        //instance.shopGenerator = GetNode<ShopGenerator>("SubViewportContainer1/SubViewport1/TexNearest/ShopGenerator");
     }
 
-    static void OnMainMenuTransition()
+    static public void OnMainMenuTransition()
     {
         instance.Playerlist.Clear();
+
+        instance.GetTree().CurrentScene.QueueFree();
+
         instance.currentSceneState = SceneState.MAIN_MENU;
-        if (instance.currentSceneState == SceneState.MAIN_MENU)
-        {
-            instance.scene = ResourceLoader.Load<PackedScene>(instance.MAIN_MENU_SCENE);
-        }
+        instance.scene = ResourceLoader.Load<PackedScene>(instance.MAIN_MENU_SCENE);
+        Node newScene = instance.scene.Instantiate();
+        instance.GetTree().Root.AddChild(newScene);
+        instance.GetTree().CurrentScene = newScene;
+
     }
 
+    static void onNewday(int quota, int mapHeight, int MapWidth,int itemsPerCatigory)
+    {
+        instance.dayTimer.Start();
 
+        instance.dayNum++;
+        if (instance.currentSceneState==SceneState.IN_GAME_DUO) 
+        {
+
+        }
+        else if(instance.currentSceneState == SceneState.IN_GAME_SOLO)
+        {
+            
+        }
+    }
 }
