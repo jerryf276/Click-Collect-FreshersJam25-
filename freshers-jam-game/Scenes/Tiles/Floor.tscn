@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dt5kek8xwlnca"]
 
-[ext_resource type="Texture2D" uid="uid://ckyqm1yq6hf40" path="res://Tiles/DebugBlocksTiles/ContextualDebugOverhangs.png" id="1_fco83"]
+[ext_resource type="Texture2D" uid="uid://bduwc5sc0ngmj" path="res://Tiles/Tilesheet.png" id="1_fco83"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_own4v"]
 atlas = ExtResource("1_fco83")
@@ -9,5 +9,6 @@ region = Rect2(0, 32, 16, 32)
 [node name="Floor" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(0, -8)
 texture = SubResource("AtlasTexture_own4v")
