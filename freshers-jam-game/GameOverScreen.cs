@@ -23,7 +23,15 @@ public partial class GameOverScreen : Control
 
         animationPlayer.AnimationFinished += OnAnimationFinished;
 
-        QuitButton.ButtonDown += OnButtonPressed;
+        QuitButton.ButtonDown += OnQuitButtonPressed;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (GameManager.IsGameOver() == true && GetTree().Paused == false)
+        {
+            GameOver();
+        }
     }
 
     private void GameOver()
@@ -33,7 +41,7 @@ public partial class GameOverScreen : Control
         gameOverSound.Play();
     }
 
-    private void OnButtonPressed()
+    private void OnQuitButtonPressed()
     {
         if (GetTree().Paused == true)
         {
