@@ -32,6 +32,8 @@ public partial class GameManager : Node2D
     Timer dayTimer;
     ShopGenerator shopGenerator;
     Node menuScene;
+    Control pauseMenu;
+
 
     public int quota;
     public int currentProgress;
@@ -58,16 +60,19 @@ public partial class GameManager : Node2D
         instance.dayTimer.WaitTime = 100;
 
         currentSceneState = SceneState.MAIN_MENU;
-       
+
         if (currentSceneState == SceneState.MAIN_MENU)
         {
             scene = ResourceLoader.Load<PackedScene>(MAIN_MENU_SCENE);
         }
+
         menuScene = scene.Instantiate();
+
         if (scene != null)
         {
-            instance.AddChild(menuScene);
-            currentScene = menuScene;
+            instance.GetTree().Root.GetChild(0).AddChild(menuScene);
+            
+            instance.currentScene= menuScene;
         }
         else
         {
@@ -79,8 +84,15 @@ public partial class GameManager : Node2D
 
     public override void _Process(double delta)
     {
+
+        //if (Input.IsActionJustPressed("esc") && GetTree().Paused == false && (GetTree().CurrentScene.Name == "CormacShopGen" || GetTree().CurrentScene.Name == "SplitScreenScene"))
+        //{
+        //    //instance.pauseMenu.Pause();
+        //}
+
         
-        if(currentProgress==quota)
+
+        if (currentProgress==quota)
         {
             if((dayNum & 3)==0)
             {
@@ -121,42 +133,55 @@ public partial class GameManager : Node2D
 
     public static void OnSoloStart()
     {
+
+       
+
         instance.currentSceneState = SceneState.IN_GAME_SOLO;
-        
+
+        GD.Print("tag" + instance.currentScene.Name);
         //note code below could be made into seprate func for code reusability
-        instance.GetTree().CurrentScene.QueueFree();
+        instance.currentScene.QueueFree();
+        GD.Print("tag" + instance.currentScene.Name);
         instance.scene = ResourceLoader.Load<PackedScene>("res://Scenes/CormacShopGen.tscn");
         Node newScene = instance.scene.Instantiate();
-        instance.GetTree().Root.AddChild(newScene);
-        instance.GetTree().CurrentScene = newScene;
+        instance.GetTree().Root.GetChild(0).AddChild(newScene);
+        instance.currentScene = newScene;
+        //instance.pauseMenu = instance.GetNode<PauseMenu>("CanvasLayer2/PauseMenu");
+        GD.Print("tag" + instance.currentScene.Name);
+
 
     }
 
 
     static public void OnDuoStart()
     {
+
+        GD.Print("yes" + instance.currentScene.Name);
+
         instance.currentSceneState = SceneState.IN_GAME_DUO;
-        
+
 
         //note code below could be made into seprate func for code reusability
-        instance.GetTree().CurrentScene.QueueFree();
+        instance.currentScene.QueueFree();
         instance.scene = ResourceLoader.Load<PackedScene>("res://SplitScreenScene.tscn");
         Node newScene = instance.scene.Instantiate();
-        instance.GetTree().Root.AddChild(newScene);
-        instance.GetTree().CurrentScene = newScene;
+        instance.GetTree().Root.GetChild(0).AddChild(newScene);
+        instance.currentScene = newScene;
+        //instance.pauseMenu = instance.GetNode<PauseMenu>("CanvasLayer2/PauseMenu");
         //instance.shopGenerator = GetNode<ShopGenerator>("SubViewportContainer1/SubViewport1/TexNearest/ShopGenerator");
+
     }
 
     static public void OnMainMenuTransition()
     {
         instance.Playerlist.Clear();
 
-        instance.GetTree().CurrentScene.QueueFree();
         instance.currentSceneState = SceneState.MAIN_MENU;
+        instance.currentScene.QueueFree();
         instance.scene = ResourceLoader.Load<PackedScene>(instance.MAIN_MENU_SCENE);
         Node newScene = instance.scene.Instantiate();
-        instance.GetTree().Root.AddChild(newScene);
-        instance.GetTree().CurrentScene = newScene;
+        instance.GetTree().Root.GetChild(0).AddChild(newScene);
+        instance.currentScene = newScene;
 
     }
 
