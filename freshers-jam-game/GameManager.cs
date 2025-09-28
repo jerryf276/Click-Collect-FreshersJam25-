@@ -152,7 +152,6 @@ public partial class GameManager : Node2D
         instance.Playerlist.Clear();
 
         instance.GetTree().CurrentScene.QueueFree();
-
         instance.currentSceneState = SceneState.MAIN_MENU;
         instance.scene = ResourceLoader.Load<PackedScene>(instance.MAIN_MENU_SCENE);
         Node newScene = instance.scene.Instantiate();
