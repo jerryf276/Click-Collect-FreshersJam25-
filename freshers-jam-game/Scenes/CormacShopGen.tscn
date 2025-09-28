@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://cdpwh4yohbv5o"]
+[gd_scene load_steps=8 format=4 uid="uid://cdpwh4yohbv5o"]
 
 [ext_resource type="PackedScene" uid="uid://burgd3s83xa3o" path="res://UI/Checklist.tscn" id="1_comkp"]
 [ext_resource type="TileSet" uid="uid://cpukuftv7e2nq" path="res://Scenes/CormacTestShopSet.tres" id="1_qfsg4"]
 [ext_resource type="Script" uid="uid://dpsw84ogtjr7x" path="res://Scenes/ShopGenerator.cs" id="2_se3lx"]
 [ext_resource type="PackedScene" uid="uid://dx7ecrxlenx0q" path="res://Player.tscn" id="3_se3lx"]
 [ext_resource type="Script" uid="uid://bhgdts7usq75d" path="res://Scenes/ChecklistManager.cs" id="4_comkp"]
+[ext_resource type="PackedScene" uid="uid://calxjxddftcmj" path="res://PauseMenu.tscn" id="6_e2bt4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_comkp"]
 size = Vector2(200, 200)
@@ -58,3 +59,7 @@ position = Vector2(-124, 192)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropOffArea"]
 shape = SubResource("RectangleShape2D_comkp")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer2" instance=ExtResource("6_e2bt4")]
