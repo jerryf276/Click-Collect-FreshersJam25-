@@ -51,6 +51,7 @@ checklistUI = NodePath("../CanvasLayer/Panel")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Panel" parent="CanvasLayer" instance=ExtResource("1_comkp")]
+metadata/_edit_use_anchors_ = true
 
 [node name="DropOffArea" type="Area2D" parent="."]
 position = Vector2(-124, 192)

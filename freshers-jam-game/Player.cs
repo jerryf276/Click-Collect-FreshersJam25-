@@ -103,7 +103,7 @@ public partial class Player : Node2D
 			else if (playerNumber == 2)
 			{
 
-				if (Input.IsActionPressed("pickup2"))
+				if (Input.IsActionPressed("pickup_p2"))
 				{
 					if (storedInventoryNumber < maxInventoryCapacity)
 					{

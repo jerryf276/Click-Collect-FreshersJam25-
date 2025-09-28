@@ -15,14 +15,14 @@ public partial class SplitScreenManager : Node
 
     public override void _Ready()
     {
-        player1 = GetNode<CharacterBody2D>("SubViewportContainer1/SubViewport1/Player1/CharacterBody2D");
-        player2 = GetNode<CharacterBody2D>("SubViewportContainer2/SubViewport2/Player2/CharacterBody2D");
+        player1 = GetNode<CharacterBody2D>("SubViewportContainer1/SubViewport1/TexNearest/Player1/CharacterBody2D");
+        player2 = GetNode<CharacterBody2D>("SubViewportContainer2/SubViewport2/TexNearest/Player2/CharacterBody2D");
 
         viewport1 = GetNode<Viewport>("SubViewportContainer1/SubViewport1");
         viewport2 = GetNode<Viewport>("SubViewportContainer2/SubViewport2");
 
-        camera1 = GetNode<Camera2D>("SubViewportContainer1/SubViewport1/Player1/Camera2D1");
-        camera2 = GetNode<Camera2D>("SubViewportContainer2/SubViewport2/Player2/Camera2D2");
+        camera1 = GetNode<Camera2D>("SubViewportContainer1/SubViewport1/TexNearest/Player1/Camera2D1");
+        camera2 = GetNode<Camera2D>("SubViewportContainer2/SubViewport2/TexNearest/Player2/Camera2D2");
 
         viewport2.World2D = viewport1.World2D;
     }
