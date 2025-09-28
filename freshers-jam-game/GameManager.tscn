@@ -6,3 +6,4 @@
 script = ExtResource("1_p13vs")
 
 [node name="DayTime" type="Timer" parent="."]
+one_shot = true

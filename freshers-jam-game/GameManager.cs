@@ -41,6 +41,9 @@ public partial class GameManager : Node2D
     public int dayNum=1;
     public int itemsPerCat=2;
     public int MapSize = 10;
+    public int totalItemsDelivered = 0;
+    public int totalDaysCompleted = 0;
+    public int totalListsCompleted = 0;
 
     public List<Player> Playerlist = new List<Player>();
 
@@ -57,7 +60,7 @@ public partial class GameManager : Node2D
 
         DisplayServer.WindowSetTitle("Click & collect");
 
-        dayTimer = GetNode<Timer>("DayTime");
+        instance.dayTimer = instance.GetNode<Timer>("DayTime");
         instance.dayTimer.WaitTime = 100;
 
         currentSceneState = SceneState.MAIN_MENU;
@@ -109,8 +112,8 @@ public partial class GameManager : Node2D
             }
             
             onNewday(quota,MapSize,MapSize,itemsPerCat);
-           
         }
+        GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
     }
 
     public static void AddtoPlayer(Player player)
@@ -134,8 +137,9 @@ public partial class GameManager : Node2D
     public static void OnSoloStart()
     {
 
-       
 
+        instance.dayTimer.Start();
+       // instance.dayTimer.Paused = false;
         instance.currentSceneState = SceneState.IN_GAME_SOLO;
 
   
@@ -190,6 +194,7 @@ public partial class GameManager : Node2D
     {
        
         instance.dayTimer.Start();
+        instance.totalDaysCompleted++;
         instance.dayNum++;
         GD.Print(instance.dayNum, itemsPerCatigory, quota);
         instance.currentProgress = 0;
@@ -204,4 +209,47 @@ public partial class GameManager : Node2D
         instance.currentProgress++;
         
     }
+
+    //static public void IncrementDaysCompleted()
+    //{
+    //    instance.totalDaysCompleted++;
+    //}
+
+    static public void IncrementListsCompleted()
+    {
+        instance.totalListsCompleted++;
+    }
+
+    static public void AddItemsCompleted(int items)
+    {
+        instance.totalItemsDelivered += items;
+    }
+
+
+    static public int GetDaysCompleted()
+    {
+        return instance.totalDaysCompleted;
+    }
+
+    static public int GetListsCompleted()
+    {
+        return instance.totalListsCompleted;
+    }
+
+    static public int GetItemsDelivered()
+    {
+        return instance.totalItemsDelivered;
+    }
+
+
+    static public bool IsGameOver()
+    {
+        if (instance.dayTimer.TimeLeft <= 0.0f)
+        {
+           // GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
+            return true;
+        }
+        return false;
+    }
+
 }

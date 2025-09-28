@@ -140,7 +140,10 @@ public partial class ChecklistManager : Node
             if(kvp.Value != ChecklistItemCompletion.YES) return false;
         }
         listsCompleted++;
+        GameManager.IncrementListsCompleted();
+       // GameManager.
         listDone.Play();
+        GameManager.AddItemsCompleted(itemsInCurrentList.Count());
         itemsInCurrentList.Clear();
         return true;
     }
