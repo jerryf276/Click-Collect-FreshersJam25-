@@ -13,6 +13,7 @@ public partial class PauseMenu : Control
 
     private static readonly PackedScene titleScreen = GD.Load<PackedScene>("res://Scenes/TitleScreen.tscn");
     private static readonly PackedScene controlsScreen = GD.Load<PackedScene>("res://Scenes/ControlsScreen.tscn");
+    //private PackedScene currentScene;
 
     public override void _Ready()
     {
@@ -21,6 +22,25 @@ public partial class PauseMenu : Control
         QuitButton = GetNode<Button>("PanelContainer/VBoxContainer/QuitButton");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
+
+        QuitButton.ButtonDown += OnQuitPressed;
+        ResumeButton.ButtonDown += OnResumePressed;
+        ControlsButton.ButtonDown += OnControlsPressed;
+
+
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("esc") && GetTree().Paused == false && (GetTree().CurrentScene.Name == "CormacShopGen" || GetTree().CurrentScene.Name == "SplitScreenScene"))
+        {
+            Pause();
+        }
+
+        else if (Input.IsActionJustPressed("esc") && GetTree().Paused == true)
+        {
+            Resume();
+        }
     }
     private void Resume()
     {
@@ -35,17 +55,21 @@ public partial class PauseMenu : Control
         animationPlayer.Play("blur");
     }
 
-    private void testEsc()
-    {
-        if (Input.IsActionJustPressed("esc") && GetTree().Paused == false)
-        {
-            Pause();
-        }
 
-        else if (Input.IsActionJustPressed("esc") && GetTree().Paused == true)
-        {
-            Resume();
-        }
+    private void OnQuitPressed()
+    {
+        GetTree().ChangeSceneToPacked(titleScreen);
+    }
+
+
+    private void OnResumePressed()
+    {
+        Resume();
+    }
+
+    private void OnControlsPressed()
+    {
+        GetTree().ChangeSceneToPacked(controlsScreen);
     }
 
 
