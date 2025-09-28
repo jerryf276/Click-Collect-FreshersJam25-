@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://cdpwh4yohbv5o"]
+[gd_scene load_steps=10 format=4 uid="uid://cdpwh4yohbv5o"]
 
 [ext_resource type="PackedScene" uid="uid://burgd3s83xa3o" path="res://UI/Checklist.tscn" id="1_comkp"]
 [ext_resource type="TileSet" uid="uid://cpukuftv7e2nq" path="res://Scenes/CormacTestShopSet.tres" id="1_qfsg4"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bhgdts7usq75d" path="res://Scenes/ChecklistManager.cs" id="4_comkp"]
 [ext_resource type="AudioStream" uid="uid://dixwd58qni5gt" path="res://audio/listDone.mp3" id="5_ub8qo"]
 [ext_resource type="PackedScene" uid="uid://calxjxddftcmj" path="res://PauseMenu.tscn" id="6_e2bt4"]
+[ext_resource type="AudioStream" uid="uid://cg0er6cxpy0gu" path="res://audio/GameMusic.mp3" id="8_d6ao8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_comkp"]
 size = Vector2(200, 200)
@@ -68,3 +69,8 @@ shape = SubResource("RectangleShape2D_comkp")
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer2" instance=ExtResource("6_e2bt4")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_d6ao8")
+volume_db = -5.622
+autoplay = true

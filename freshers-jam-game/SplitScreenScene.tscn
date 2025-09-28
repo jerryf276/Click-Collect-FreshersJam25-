@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://ciavpdwtelhf4"]
+[gd_scene load_steps=10 format=4 uid="uid://ciavpdwtelhf4"]
 
 [ext_resource type="Script" uid="uid://d1lek3kvrbu4h" path="res://SplitScreenManager.cs" id="1_s5sy2"]
 [ext_resource type="PackedScene" uid="uid://dx7ecrxlenx0q" path="res://Player.tscn" id="2_4w0rk"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bhgdts7usq75d" path="res://Scenes/ChecklistManager.cs" id="5_knkey"]
 [ext_resource type="PackedScene" uid="uid://burgd3s83xa3o" path="res://UI/Checklist.tscn" id="6_xv05t"]
 [ext_resource type="PackedScene" uid="uid://calxjxddftcmj" path="res://PauseMenu.tscn" id="7_sqft4"]
+[ext_resource type="AudioStream" uid="uid://cg0er6cxpy0gu" path="res://audio/GameMusic.mp3" id="8_knkey"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4416h"]
 size = Vector2(200, 200)
@@ -100,3 +101,8 @@ playerNumber = 2
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer2" instance=ExtResource("7_sqft4")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_knkey")
+volume_db = -5.622
+autoplay = true

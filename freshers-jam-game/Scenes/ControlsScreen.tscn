@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bohni453fwst4"]
+[gd_scene load_steps=11 format=3 uid="uid://bohni453fwst4"]
 
 [ext_resource type="Script" uid="uid://c6asggqmmdofs" path="res://ControlsScreen.cs" id="1_farsn"]
 [ext_resource type="FontFile" uid="uid://dxvigofj150bx" path="res://fonts/PIXY.ttf" id="2_frtmr"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://c0gcm7cuu6gmq" path="res://UI/rightArrow.png" id="6_h5ncc"]
 [ext_resource type="Texture2D" uid="uid://c1ub4bgqe6rt6" path="res://UI/leftArrow.png" id="7_00i7j"]
 [ext_resource type="Texture2D" uid="uid://bp6cjuj1ioqwy" path="res://UI/Enter Key.png" id="8_2qggt"]
+[ext_resource type="AudioStream" uid="uid://bpa1kyt1ig0u0" path="res://audio/ControlsMusic.mp3" id="9_frtmr"]
+[ext_resource type="AudioStream" uid="uid://pu7gxjc2ibjo" path="res://audio/buttonPressed.mp3" id="10_a42be"]
 
 [node name="Controls_Menu" type="Control"]
 process_mode = 3
@@ -291,3 +293,11 @@ theme_override_fonts/font = ExtResource("2_frtmr")
 theme_override_font_sizes/font_size = 93
 text = "BACK"
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_frtmr")
+volume_db = -2.811
+autoplay = true
+
+[node name="ButtonPressed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_a42be")
