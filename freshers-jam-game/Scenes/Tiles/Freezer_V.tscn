@@ -1,12 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://cc66xp43qw6yq"]
+[gd_scene load_steps=10 format=3 uid="uid://cc66xp43qw6yq"]
 
-[ext_resource type="Texture2D" uid="uid://ckyqm1yq6hf40" path="res://Tiles/DebugBlocksTiles/ContextualDebugOverhangs.png" id="1_7enhy"]
 [ext_resource type="Script" uid="uid://cm4541s5y7vre" path="res://Scenes/Tiles/Shelf.cs" id="1_acfxx"]
+[ext_resource type="Texture2D" uid="uid://bduwc5sc0ngmj" path="res://Tiles/Tilesheet.png" id="2_swv5y"]
 [ext_resource type="Texture2D" uid="uid://bakujy4t1er8o" path="res://Tiles/DebugBlocksTiles/InsideBanner.png" id="3_swv5y"]
 [ext_resource type="FontFile" uid="uid://dxvigofj150bx" path="res://fonts/PIXY.ttf" id="4_swv5y"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_swv5y"]
+atlas = ExtResource("2_swv5y")
+region = Rect2(0, 0, 24, 24)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_own4v"]
-atlas = ExtResource("1_7enhy")
+atlas = ExtResource("2_swv5y")
 region = Rect2(64, 32, 16, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sa1ct"]
@@ -22,7 +26,12 @@ script = ExtResource("1_acfxx")
 myType = 1
 whatIContainLabel = NodePath("InsideBubble/InsideMe")
 
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(4, 4)
+texture = SubResource("AtlasTexture_swv5y")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 position = Vector2(0, -8)
 texture = SubResource("AtlasTexture_own4v")
 

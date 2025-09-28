@@ -7,11 +7,11 @@ public partial class MainMenu : Control
 	private Button multiPlayerButton;
 	private Button controlsButton;
 	private Button quitButton;
-   
+    AudioStreamPlayer buttonPressed;
 
-	//public Node GameManager;
+    //public Node GameManager;
 
-	private static readonly PackedScene level = GD.Load<PackedScene>("res://Scenes/CormacShopGen2.tscn");
+    private static readonly PackedScene level = GD.Load<PackedScene>("res://Scenes/CormacShopGen2.tscn");
 	private static readonly PackedScene controlsScreen = GD.Load<PackedScene>("res://Scenes/ControlsScreen.tscn");
 
 
@@ -27,11 +27,13 @@ public partial class MainMenu : Control
 		multiPlayerButton.ButtonDown += OnMultiPlayerPressed;
 		controlsButton.ButtonDown += OnControlsPressed;
 		quitButton.ButtonDown += OnQuitButtonPressed;
-	}
+        buttonPressed = GetNode<AudioStreamPlayer>("ButtonPressed");
+    }
 
 
 	private void OnSinglePlayerPressed()
 	{
+		buttonPressed.Play();
 	   GameManager.OnSoloStart();
 		
 	}
@@ -39,12 +41,14 @@ public partial class MainMenu : Control
 
 	private void OnMultiPlayerPressed()
 	{
-		GameManager.OnDuoStart();
+        buttonPressed.Play();
+        GameManager.OnDuoStart();
 	}
 
 	private void OnControlsPressed()
 	{
-		GetTree().ChangeSceneToPacked(controlsScreen);
+        buttonPressed.Play();
+        GetTree().ChangeSceneToPacked(controlsScreen);
 	//	((ControlsScreen)GetTree().CurrentScene).SetPreviousScene(GD.Load<PackedScene>(""));
 
     }
@@ -52,6 +56,7 @@ public partial class MainMenu : Control
 
 	private void OnQuitButtonPressed()
 	{
-		GetTree().Quit();
+        buttonPressed.Play();
+        GetTree().Quit();
 	}
 }

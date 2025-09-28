@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dx7ecrxlenx0q"]
+[gd_scene load_steps=5 format=3 uid="uid://dx7ecrxlenx0q"]
 
 [ext_resource type="Script" uid="uid://dem0ck5itr88s" path="res://Player.cs" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://f503mxsfh85x" path="res://icon.svg" id="1_xhfnw"]
+[ext_resource type="AudioStream" uid="uid://bgmrpaxuhqq51" path="res://audio/equipItem.mp3" id="3_kne1u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kpjcp"]
 radius = 63.0317
@@ -18,3 +19,7 @@ texture = ExtResource("1_xhfnw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_kpjcp")
+
+[node name="sfx_collect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_kne1u")
+volume_db = 6.198
