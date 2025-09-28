@@ -18,6 +18,8 @@ public partial class PauseMenu : Control
     AudioStreamPlayer buttonPressed;
     AudioStreamPlayer Paused;
 
+    bool gameQuit = false;
+
     public override void _Ready()
     {
         ResumeButton = GetNode<Button>("PanelContainer/VBoxContainer/ResumeButton");
@@ -32,6 +34,7 @@ public partial class PauseMenu : Control
 
         buttonPressed = GetNode<AudioStreamPlayer>("ButtonPressed");
         Paused = GetNode<AudioStreamPlayer>("Pause");
+        animationPlayer.AnimationFinished += OnAnimationFinished;
     }
 
     public override void _Process(double delta)
@@ -46,6 +49,9 @@ public partial class PauseMenu : Control
         {
             Resume();
         }
+
+
+       
     }
     private void Resume()
     {
@@ -63,13 +69,25 @@ public partial class PauseMenu : Control
     }
 
 
+    private void OnAnimationFinished(StringName animationName)
+    {
+
+        if (animationName == "blur" && gameQuit == true)
+        {
+            GameManager.OnMainMenuTransition();
+        }
+    }
+
+
     private void OnQuitPressed()
     {
         //GetTree().ChangeSceneToPacked(titleScreen);
         if (GetTree().Paused == true)
         {
             GetTree().Paused = false;
-            GameManager.OnMainMenuTransition();
+            animationPlayer.PlayBackwards("blur");
+            gameQuit = true;
+            //GameManager.OnMainMenuTransition();
         }
     }
 
