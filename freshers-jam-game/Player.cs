@@ -18,10 +18,15 @@ public partial class Player : Node2D
 
     public Shelf shelfImOn;
 
+	private AnimationPlayer playerAnimation;
+	private Sprite2D playerSprite;
+
 	public override void _Ready()
 	{
 		GameManager.AddtoPlayer(this);
 		sfxCollect = GetNode<AudioStreamPlayer>("sfx_collect");
+		playerAnimation = GetNode<AnimationPlayer>("CharacterBody2D/Sprite2D/AnimationPlayer");
+		playerSprite = GetNode<Sprite2D>("CharacterBody2D/Sprite2D");
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -133,7 +138,24 @@ public partial class Player : Node2D
 			}
 		}
 
+		if (player.Velocity.X > 0)
+		{
+			playerSprite.FlipH = false;
+		}
+		else if (player.Velocity.X < 0)
+		{
+			playerSprite.FlipH = true;
+		}
 
+
+		if (player.Velocity.X != 0 || player.Velocity.Y != 0)
+		{
+			playerAnimation.Play("walkRight");
+		}
+		else
+		{
+			playerAnimation.Stop();
+		}
 	}
 }
 
