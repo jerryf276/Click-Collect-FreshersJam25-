@@ -34,9 +34,10 @@ public partial class GameManager : Node2D
     Node menuScene;
     Control pauseMenu;
 
+    public bool newdaycreated = false;
 
-    public int quota;
-    public int currentProgress;
+    public int quota=2;
+    public int currentProgress=0;
     public int dayNum=1;
     public int itemsPerCat=2;
     public int MapSize = 10;
@@ -85,15 +86,13 @@ public partial class GameManager : Node2D
     public override void _Process(double delta)
     {
 
-        //if (Input.IsActionJustPressed("esc") && GetTree().Paused == false && (GetTree().CurrentScene.Name == "CormacShopGen" || GetTree().CurrentScene.Name == "SplitScreenScene"))
-        //{
-        //    //instance.pauseMenu.Pause();
-        //}
+       
 
         
-
-        if (currentProgress==quota)
+        if (currentProgress==quota&&newdaycreated==false)
         {
+            instance.newdaycreated = true;
+            GD.Print("woah");
             if((dayNum & 3)==0)
             {
                 quota++;
@@ -108,8 +107,9 @@ public partial class GameManager : Node2D
             {
                 itemsPerCat++;
             }
-
+            
             onNewday(quota,MapSize,MapSize,itemsPerCat);
+           
         }
     }
 
@@ -138,16 +138,16 @@ public partial class GameManager : Node2D
 
         instance.currentSceneState = SceneState.IN_GAME_SOLO;
 
-        GD.Print("tag" + instance.currentScene.Name);
+  
         //note code below could be made into seprate func for code reusability
+
         instance.currentScene.QueueFree();
-        GD.Print("tag" + instance.currentScene.Name);
+        
         instance.scene = ResourceLoader.Load<PackedScene>("res://Scenes/CormacShopGen.tscn");
         Node newScene = instance.scene.Instantiate();
         instance.GetTree().Root.GetChild(0).AddChild(newScene);
         instance.currentScene = newScene;
-        //instance.pauseMenu = instance.GetNode<PauseMenu>("CanvasLayer2/PauseMenu");
-        GD.Print("tag" + instance.currentScene.Name);
+        instance.shopGenerator = instance.GetNode<ShopGenerator>("CormacShopGen/ShopGenerator");
 
 
     }
@@ -156,7 +156,7 @@ public partial class GameManager : Node2D
     static public void OnDuoStart()
     {
 
-        GD.Print("yes" + instance.currentScene.Name);
+        
 
         instance.currentSceneState = SceneState.IN_GAME_DUO;
 
@@ -167,6 +167,7 @@ public partial class GameManager : Node2D
         Node newScene = instance.scene.Instantiate();
         instance.GetTree().Root.GetChild(0).AddChild(newScene);
         instance.currentScene = newScene;
+        instance.shopGenerator = instance.GetNode<ShopGenerator>("SplitScreenScene/ShopGenerator");
         //instance.pauseMenu = instance.GetNode<PauseMenu>("CanvasLayer2/PauseMenu");
         //instance.shopGenerator = GetNode<ShopGenerator>("SubViewportContainer1/SubViewport1/TexNearest/ShopGenerator");
 
@@ -187,16 +188,20 @@ public partial class GameManager : Node2D
 
     static void onNewday(int quota, int mapHeight, int MapWidth,int itemsPerCatigory)
     {
+       
         instance.dayTimer.Start();
-
         instance.dayNum++;
-        if (instance.currentSceneState==SceneState.IN_GAME_DUO) 
-        {
+        GD.Print(instance.dayNum, itemsPerCatigory, quota);
+        instance.currentProgress = 0;
+        instance.shopGenerator.GenerateNewMapData(MapWidth, mapHeight);
+        instance.shopGenerator.SetTilemapBasedOnData(itemsPerCatigory);
+        instance.newdaycreated = false;
+    }
 
-        }
-        else if(instance.currentSceneState == SceneState.IN_GAME_SOLO)
-        {
-            
-        }
+    static public void CheckProg()
+    {
+       
+        instance.currentProgress++;
+        
     }
 }

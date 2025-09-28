@@ -39,7 +39,7 @@ public partial class PauseMenu : Control
 
     public override void _Process(double delta)
     {
-        GD.Print("level" + GetTree().CurrentScene.GetChild(1).Name);
+        
         if (Input.IsActionJustPressed("esc") && GetTree().Paused == false && (GetTree().CurrentScene.GetChild(1).Name == "CormacShopGen" || GetTree().CurrentScene.GetChild(1).Name == "SplitScreenScene"))
         {
             Pause();
