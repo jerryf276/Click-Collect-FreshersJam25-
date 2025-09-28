@@ -11,7 +11,7 @@ public partial class Player : Node2D
 	[Export] private CharacterBody2D player;
 	private Vector2 lastDirection = new Vector2(1, 0);
 	private int maxInventoryCapacity = 5;
-
+	private AudioStreamPlayer sfxCollect;
 
 	public HashSet<string> storedInventory = new HashSet<string>();
     [Export] public int storedInventoryNumber = 0;
@@ -21,6 +21,7 @@ public partial class Player : Node2D
 	public override void _Ready()
 	{
 		GameManager.AddtoPlayer(this);
+		sfxCollect = GetNode<AudioStreamPlayer>("sfx_collect");
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -77,6 +78,8 @@ public partial class Player : Node2D
 			lastDirection = direction;
 		}
 
+		bool soundPlayed = false;
+
 		for (int i = 0; i < player.GetSlideCollisionCount(); i++)
 		{
 			var collision = player.GetSlideCollision(i);
@@ -95,6 +98,11 @@ public partial class Player : Node2D
 							storedInventory.Add(shelfImOn.Contains);
 							storedInventoryNumber = storedInventory.Count;
 							GD.Print(storedInventoryNumber);
+							if (soundPlayed == false)
+							{
+								sfxCollect.Play();
+								soundPlayed = true;
+							}
 						}
 					}
 				}
@@ -114,7 +122,12 @@ public partial class Player : Node2D
 							storedInventory.Add(shelfImOn.Contains);
 							storedInventoryNumber = storedInventory.Count;
 							GD.Print(storedInventoryNumber);
-						}
+                            if (soundPlayed == false)
+                            {
+                                sfxCollect.Play();
+                                soundPlayed = true;
+                            }
+                        }
 					}
                 }
 			}
