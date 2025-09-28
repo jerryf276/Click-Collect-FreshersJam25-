@@ -50,7 +50,12 @@ public partial class ChecklistManager : Node
                 player.storedInventory.Clear();
                 player.storedInventoryNumber = 0;
 
-                if(CheckListCompletion()) GenerateNewList();
+                if(CheckListCompletion())
+                {
+                    GameManager.CheckProg();
+                    GenerateNewList();   
+                }
+                    
             }
         };
 
