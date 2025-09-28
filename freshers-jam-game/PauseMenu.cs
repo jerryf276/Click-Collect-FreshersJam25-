@@ -11,8 +11,8 @@ public partial class PauseMenu : Control
     private AnimationPlayer animationPlayer;
 
 
-    private static readonly PackedScene titleScreen = GD.Load<PackedScene>("res://Scenes/TitleScreen.tscn");
-    private static readonly PackedScene controlsScreen = GD.Load<PackedScene>("res://Scenes/ControlsScreen.tscn");
+  //  private static readonly PackedScene titleScreen = GD.Load<PackedScene>("res://Scenes/TitleScreen.tscn");
+  //  private static readonly PackedScene controlsScreen = GD.Load<PackedScene>("res://Scenes/ControlsScreen.tscn");
     //private PackedScene currentScene;
 
     AudioStreamPlayer buttonPressed;
