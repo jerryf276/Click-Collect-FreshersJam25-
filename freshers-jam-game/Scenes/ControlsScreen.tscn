@@ -51,6 +51,7 @@ offset_bottom = 334.0
 
 [node name="TextureRect" type="TextureRect" parent="Player1/TextureRect5"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 110.0
 offset_top = 20.0
 offset_right = 206.0
@@ -70,6 +71,7 @@ text = "W"
 
 [node name="TextureRect2" type="TextureRect" parent="Player1/TextureRect5"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 110.0
 offset_top = 105.0
 offset_right = 206.0
@@ -77,6 +79,7 @@ offset_bottom = 197.0
 texture = ExtResource("3_a42be")
 
 [node name="Label" type="Label" parent="Player1/TextureRect5/TextureRect2"]
+layout_mode = 0
 offset_left = 25.0
 offset_top = -7.0
 offset_right = 95.0
@@ -88,6 +91,7 @@ text = "S"
 
 [node name="TextureRect3" type="TextureRect" parent="Player1/TextureRect5"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 199.0
 offset_top = 105.0
 offset_right = 295.0
@@ -95,6 +99,7 @@ offset_bottom = 197.0
 texture = ExtResource("3_a42be")
 
 [node name="Label" type="Label" parent="Player1/TextureRect5/TextureRect3"]
+layout_mode = 0
 offset_left = 25.0
 offset_top = -7.0
 offset_right = 95.0
@@ -106,6 +111,7 @@ text = "D"
 
 [node name="TextureRect4" type="TextureRect" parent="Player1/TextureRect5"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 20.0
 offset_top = 105.0
 offset_right = 116.0
@@ -113,6 +119,7 @@ offset_bottom = 197.0
 texture = ExtResource("3_a42be")
 
 [node name="Label" type="Label" parent="Player1/TextureRect5/TextureRect4"]
+layout_mode = 0
 offset_left = 25.0
 offset_top = -7.0
 offset_right = 95.0
@@ -124,6 +131,7 @@ text = "A"
 
 [node name="TextureRect5" type="TextureRect" parent="Player1/TextureRect5"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 348.0
 offset_top = 105.0
 offset_right = 444.0
@@ -142,6 +150,7 @@ theme_override_font_sizes/font_size = 90
 text = "E"
 
 [node name="Label4" type="Label" parent="Player1"]
+layout_mode = 0
 offset_left = 35.0
 offset_top = 285.0
 offset_right = 211.0
@@ -153,6 +162,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label5" type="Label" parent="Player1"]
+layout_mode = 0
 offset_left = 270.0
 offset_top = 285.0
 offset_right = 446.0
@@ -176,6 +186,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect6" type="TextureRect" parent="Player2"]
+layout_mode = 0
 offset_left = -51.0
 offset_top = 116.0
 offset_right = 276.0
@@ -183,6 +194,7 @@ offset_bottom = 340.0
 
 [node name="TextureRect" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 110.0
 offset_top = 20.0
 offset_right = 206.0
@@ -191,6 +203,7 @@ texture = ExtResource("4_2yrnb")
 
 [node name="TextureRect2" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 110.0
 offset_top = 105.0
 offset_right = 206.0
@@ -199,6 +212,7 @@ texture = ExtResource("5_dt5jb")
 
 [node name="TextureRect3" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 199.0
 offset_top = 105.0
 offset_right = 295.0
@@ -207,6 +221,7 @@ texture = ExtResource("6_h5ncc")
 
 [node name="TextureRect4" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 20.0
 offset_top = 105.0
 offset_right = 116.0
@@ -215,6 +230,7 @@ texture = ExtResource("7_00i7j")
 
 [node name="TextureRect5" type="TextureRect" parent="Player2/TextureRect6"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 340.0
 offset_top = 24.0
 offset_right = 469.0
@@ -233,6 +249,7 @@ theme_override_font_sizes/font_size = 35
 text = "Enter"
 
 [node name="Label5" type="Label" parent="Player2"]
+layout_mode = 0
 offset_left = 270.0
 offset_top = 285.0
 offset_right = 446.0
@@ -244,6 +261,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label4" type="Label" parent="Player2"]
+layout_mode = 0
 offset_left = 20.0
 offset_top = 285.0
 offset_right = 196.0

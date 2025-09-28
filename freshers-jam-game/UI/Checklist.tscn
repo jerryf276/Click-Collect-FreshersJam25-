@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://burgd3s83xa3o"]
+[gd_scene load_steps=4 format=3 uid="uid://burgd3s83xa3o"]
 
+[ext_resource type="Theme" uid="uid://bsxx1jixh35sh" path="res://UI/Checklist_UITHEME.tres" id="1_1g5sd"]
 [ext_resource type="Texture2D" uid="uid://dik17yfefg6xq" path="res://Tiles/Checkmarks.png" id="1_qisos"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qisos"]
@@ -7,26 +8,29 @@ atlas = ExtResource("1_qisos")
 region = Rect2(0, 0, 16, 16)
 
 [node name="Panel" type="Panel"]
+texture_filter = 1
 anchors_preset = -1
-anchor_left = 0.75
+anchor_left = 0.8
 anchor_top = 0.05
 anchor_right = 0.95
 anchor_bottom = 0.4
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_vertical = 2
+theme = ExtResource("1_1g5sd")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
+theme_override_constants/margin_top = 29
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="VBox" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
+theme_override_constants/separation = 11
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
