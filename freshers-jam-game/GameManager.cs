@@ -179,6 +179,7 @@ public partial class GameManager : Node2D
 
     static public void OnMainMenuTransition()
     {
+        instance.dayTimer.Stop();
         instance.Playerlist.Clear();
 
         instance.currentSceneState = SceneState.MAIN_MENU;
