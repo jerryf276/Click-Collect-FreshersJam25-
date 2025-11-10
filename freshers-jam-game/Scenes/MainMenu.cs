@@ -48,7 +48,8 @@ public partial class MainMenu : Control
 	private void OnControlsPressed()
 	{
         buttonPressed.Play();
-        GetTree().ChangeSceneToPacked(controlsScreen);
+		// GetTree().ChangeSceneToPacked(controlsScreen);
+		GameManager.OnControlsStart();
 	//	((ControlsScreen)GetTree().CurrentScene).SetPreviousScene(GD.Load<PackedScene>(""));
 
     }

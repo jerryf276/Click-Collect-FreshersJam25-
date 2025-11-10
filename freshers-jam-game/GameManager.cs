@@ -53,6 +53,7 @@ public partial class GameManager : Node2D
     SceneState currentSceneState;
 
     string MAIN_MENU_SCENE = "res://Scenes/TitleScreen.tscn";
+    string CONTROLS_SCREEN = "res://Scenes/ControlsScreen.tscn";
     //  string SPLIT_SCREEN_PATH = "res://SplitScreenScene.tscn";
 
     public static List<Vector2> initialPlayerPositions;
@@ -203,12 +204,17 @@ public partial class GameManager : Node2D
 
     }
 
-    //static public void OnControlsStart()
-    //{
-    //    Node newScene;
-    //    instance.GetTree().Root.GetChild(0).RemoveChild(instance.currentScene);
-
-    //}
+    static public void OnControlsStart()
+    {
+        
+        //instance.GetTree().Root.GetChild(0).RemoveChild(instance.currentScene);
+        instance.currentSceneState = SceneState.CONTROLS;
+        instance.currentScene.QueueFree();
+        instance.scene = ResourceLoader.Load<PackedScene>(instance.CONTROLS_SCREEN);
+        Node newScene = instance.scene.Instantiate();
+        instance.GetTree().Root.GetChild(0).AddChild(newScene);
+        instance.currentScene = newScene;
+    }
 
     static void onNewday(int quota, int mapHeight, int MapWidth,int itemsPerCatigory)
     {
