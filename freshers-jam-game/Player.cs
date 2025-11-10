@@ -21,6 +21,7 @@ public partial class Player : Node2D
 	private AnimationPlayer playerAnimation;
 	private Sprite2D playerSprite;
 	private Texture2D player2Texture;
+	bool initialPositionSet;
 
 	public override void _Ready()
 	{
@@ -34,10 +35,22 @@ public partial class Player : Node2D
 		{
 			playerSprite.Texture = player2Texture;
 		}
-
+		initialPositionSet = false;
 	}
 	public override void _PhysicsProcess(double delta)
 	{
+		if (initialPositionSet == false)
+		{
+            if (playerNumber == 1)
+			{
+                GameManager.initialPlayerPositions[0] = new Vector2(Position.X, Position.Y);
+            }
+			if (playerNumber == 2)
+			{
+                GameManager.initialPlayerPositions[1] = new Vector2(Position.X, Position.Y);
+            }
+			initialPositionSet = true;
+        }
 		//if (playerNumber == 1)
 		//{
 		var direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");

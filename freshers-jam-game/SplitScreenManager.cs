@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class SplitScreenManager : Node
 {
@@ -13,6 +14,9 @@ public partial class SplitScreenManager : Node
     Camera2D camera1;
     Camera2D camera2;
 
+
+    
+
     public override void _Ready()
     {
         player1 = GetNode<CharacterBody2D>("SubViewportContainer1/SubViewport1/TexNearest/Player1/CharacterBody2D");
@@ -25,6 +29,7 @@ public partial class SplitScreenManager : Node
         camera2 = GetNode<Camera2D>("SubViewportContainer2/SubViewport2/TexNearest/Player2/Camera2D2");
 
         viewport2.World2D = viewport1.World2D;
+
     }
 
     public override void _Process(double delta)

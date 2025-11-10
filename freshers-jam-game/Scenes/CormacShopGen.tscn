@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dixwd58qni5gt" path="res://audio/listDone.mp3" id="5_ub8qo"]
 [ext_resource type="PackedScene" uid="uid://calxjxddftcmj" path="res://PauseMenu.tscn" id="6_e2bt4"]
 [ext_resource type="AudioStream" uid="uid://cg0er6cxpy0gu" path="res://audio/GameMusic.mp3" id="8_d6ao8"]
-[ext_resource type="PackedScene" path="res://GameOverScreen.tscn" id="9_8oqob"]
+[ext_resource type="PackedScene" uid="uid://votv86sjclyc" path="res://GameOverScreen.tscn" id="9_8oqob"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_comkp"]
 size = Vector2(200, 200)

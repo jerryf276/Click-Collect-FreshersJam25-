@@ -50,7 +50,9 @@ public partial class GameManager : Node2D
     SceneState currentSceneState;
 
     string MAIN_MENU_SCENE = "res://Scenes/TitleScreen.tscn";
+    //  string SPLIT_SCREEN_PATH = "res://SplitScreenScene.tscn";
 
+    public static List<Vector2> initialPlayerPositions;
 
 
 
@@ -82,18 +84,20 @@ public partial class GameManager : Node2D
         {
             GD.Print("err scene empty");
         }
-        
+
+        initialPlayerPositions = new List<Vector2> { new Vector2(0, 0), new Vector2(0, 0) };
     }
 
 
     public override void _Process(double delta)
     {
 
-       
+        GD.Print("CURRENT PROGRESS: ", currentProgress);
 
         
         if (currentProgress==quota&&newdaycreated==false)
         {
+            GD.Print("Day finished!");
             instance.newdaycreated = true;
             GD.Print("woah");
             if((dayNum & 3)==0)
@@ -113,7 +117,7 @@ public partial class GameManager : Node2D
             
             onNewday(quota,MapSize,MapSize,itemsPerCat);
         }
-        GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
+       // GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
     }
 
     public static void AddtoPlayer(Player player)
@@ -153,7 +157,7 @@ public partial class GameManager : Node2D
         instance.currentScene = newScene;
         instance.shopGenerator = instance.GetNode<ShopGenerator>("CormacShopGen/ShopGenerator");
 
-
+        
     }
 
 
@@ -193,15 +197,30 @@ public partial class GameManager : Node2D
 
     static void onNewday(int quota, int mapHeight, int MapWidth,int itemsPerCatigory)
     {
-       
+        GD.Print("It's a new day.");
         instance.dayTimer.Start();
         instance.totalDaysCompleted++;
         instance.dayNum++;
         GD.Print(instance.dayNum, itemsPerCatigory, quota);
-        instance.currentProgress = 0;
+
+        if (instance.currentSceneState == SceneState.IN_GAME_SOLO)
+        {
+            // instance.Playerlist[0].Position = initialPlayerPositions[0];
+            GetPlayers(0).Position = initialPlayerPositions[0];
+        }
+        else if (instance.currentSceneState == SceneState.IN_GAME_DUO)
+        {
+            //instance.Playerlist[0].Position = initialPlayerPositions[0];
+            //instance.Playerlist[1].Position = initialPlayerPositions[1];
+            GetPlayers(0).Position = initialPlayerPositions[0];
+            GetPlayers(1).Position = initialPlayerPositions[1];
+        }
+
         instance.shopGenerator.GenerateNewMapData(MapWidth, mapHeight);
         instance.shopGenerator.SetTilemapBasedOnData(itemsPerCatigory);
         instance.newdaycreated = false;
+
+        
     }
 
     static public void CheckProg()
