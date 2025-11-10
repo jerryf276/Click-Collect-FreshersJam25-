@@ -16,7 +16,8 @@ public partial class GameManager : Node2D
     {
         MAIN_MENU,
         IN_GAME_SOLO,
-        IN_GAME_DUO
+        IN_GAME_DUO,
+        CONTROLS
     }
 
     enum Players
@@ -34,6 +35,7 @@ public partial class GameManager : Node2D
     Node menuScene;
     Control pauseMenu;
     SplitScreenManager splitScreenManager;
+    MainMenu mainMenuScene;
 
     public bool newdaycreated = false;
 
@@ -71,6 +73,7 @@ public partial class GameManager : Node2D
         if (currentSceneState == SceneState.MAIN_MENU)
         {
             scene = ResourceLoader.Load<PackedScene>(MAIN_MENU_SCENE);
+       //     mainMenuScene = ResourceLoader.Load<MainMenu>(MAIN_MENU_SCENE);
         }
 
         menuScene = scene.Instantiate();
@@ -186,17 +189,26 @@ public partial class GameManager : Node2D
 
     static public void OnMainMenuTransition()
     {
-        instance.dayTimer.Stop();
-        instance.Playerlist.Clear();
-
-        instance.currentSceneState = SceneState.MAIN_MENU;
-        instance.currentScene.QueueFree();
-        instance.scene = ResourceLoader.Load<PackedScene>(instance.MAIN_MENU_SCENE);
-        Node newScene = instance.scene.Instantiate();
-        instance.GetTree().Root.GetChild(0).AddChild(newScene);
-        instance.currentScene = newScene;
+            Node newScene;
+            instance.dayTimer.Stop();
+            instance.Playerlist.Clear();
+            instance.GetTree().Root.GetChild(0).RemoveChild(instance.currentScene);
+            instance.currentSceneState = SceneState.MAIN_MENU;
+            instance.currentScene.QueueFree();
+            instance.scene = ResourceLoader.Load<PackedScene>(instance.MAIN_MENU_SCENE);
+            newScene = instance.scene.Instantiate();
+            instance.GetTree().Root.GetChild(0).AddChild(newScene);
+            instance.currentScene = newScene;
+           // instance.mainMenuScene = instance.GetNode<MainMenu>("TitleScreen");
 
     }
+
+    //static public void OnControlsStart()
+    //{
+    //    Node newScene;
+    //    instance.GetTree().Root.GetChild(0).RemoveChild(instance.currentScene);
+
+    //}
 
     static void onNewday(int quota, int mapHeight, int MapWidth,int itemsPerCatigory)
     {
