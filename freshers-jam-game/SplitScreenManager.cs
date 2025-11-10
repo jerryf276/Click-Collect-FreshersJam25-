@@ -36,6 +36,7 @@ public partial class SplitScreenManager : Node
     {
         camera1.Position = player1.Position;
         camera2.Position = player2.Position;
+
     }
 
 }

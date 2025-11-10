@@ -33,6 +33,7 @@ public partial class GameManager : Node2D
     ShopGenerator shopGenerator;
     Node menuScene;
     Control pauseMenu;
+    SplitScreenManager splitScreenManager;
 
     public bool newdaycreated = false;
 
@@ -54,7 +55,7 @@ public partial class GameManager : Node2D
 
     public static List<Vector2> initialPlayerPositions;
 
-
+    public static List<bool> positionReset;
 
     public override void _Ready()
     {
@@ -86,6 +87,7 @@ public partial class GameManager : Node2D
         }
 
         initialPlayerPositions = new List<Vector2> { new Vector2(0, 0), new Vector2(0, 0) };
+        positionReset = new List<bool> { false, false };
     }
 
 
@@ -164,7 +166,7 @@ public partial class GameManager : Node2D
     static public void OnDuoStart()
     {
 
-        
+        instance.dayTimer.Start();
 
         instance.currentSceneState = SceneState.IN_GAME_DUO;
 
@@ -175,7 +177,8 @@ public partial class GameManager : Node2D
         Node newScene = instance.scene.Instantiate();
         instance.GetTree().Root.GetChild(0).AddChild(newScene);
         instance.currentScene = newScene;
-        instance.shopGenerator = instance.GetNode<ShopGenerator>("SplitScreenScene/ShopGenerator");
+        instance.shopGenerator = instance.GetNode<ShopGenerator>("SplitScreenScene/SubViewportContainer1/SubViewport1/TexNearest/ShopGenerator");
+        instance.splitScreenManager = instance.GetNode<SplitScreenManager>("SplitScreenScene");
         //instance.pauseMenu = instance.GetNode<PauseMenu>("CanvasLayer2/PauseMenu");
         //instance.shopGenerator = GetNode<ShopGenerator>("SubViewportContainer1/SubViewport1/TexNearest/ShopGenerator");
 
@@ -203,18 +206,23 @@ public partial class GameManager : Node2D
         instance.dayNum++;
         GD.Print(instance.dayNum, itemsPerCatigory, quota);
 
-        if (instance.currentSceneState == SceneState.IN_GAME_SOLO)
+        if (instance.currentSceneState == SceneState.IN_GAME_DUO)
         {
-            // instance.Playerlist[0].Position = initialPlayerPositions[0];
-            GetPlayers(0).Position = initialPlayerPositions[0];
+            positionReset[0] = true;
+            positionReset[1] = true;
         }
-        else if (instance.currentSceneState == SceneState.IN_GAME_DUO)
-        {
-            //instance.Playerlist[0].Position = initialPlayerPositions[0];
-            //instance.Playerlist[1].Position = initialPlayerPositions[1];
-            GetPlayers(0).Position = initialPlayerPositions[0];
-            GetPlayers(1).Position = initialPlayerPositions[1];
-        }
+        //if (instance.currentSceneState == SceneState.IN_GAME_SOLO)
+        //{
+        //    // instance.Playerlist[0].Position = initialPlayerPositions[0];
+        //    GetPlayers(0).Position = initialPlayerPositions[0];
+        //}
+        //else if (instance.currentSceneState == SceneState.IN_GAME_DUO)
+        //{
+        //    //instance.Playerlist[0].Position = initialPlayerPositions[0];
+        //    //instance.Playerlist[1].Position = initialPlayerPositions[1];
+        //    GetPlayers(0).Position = initialPlayerPositions[0];
+        //    GetPlayers(1).Position = initialPlayerPositions[1];
+        //}
 
         instance.shopGenerator.GenerateNewMapData(MapWidth, mapHeight);
         instance.shopGenerator.SetTilemapBasedOnData(itemsPerCatigory);

@@ -41,16 +41,16 @@ public partial class Player : Node2D
 	{
 		if (initialPositionSet == false)
 		{
-            if (playerNumber == 1)
+			if (playerNumber == 1)
 			{
-                GameManager.initialPlayerPositions[0] = new Vector2(Position.X, Position.Y);
-            }
+				GameManager.initialPlayerPositions[0] = new Vector2(Position.X, Position.Y);
+			}
 			if (playerNumber == 2)
 			{
-                GameManager.initialPlayerPositions[1] = new Vector2(Position.X, Position.Y);
-            }
+				GameManager.initialPlayerPositions[1] = new Vector2(Position.X, Position.Y);
+			}
 			initialPositionSet = true;
-        }
+		}
 		//if (playerNumber == 1)
 		//{
 		var direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
@@ -149,14 +149,14 @@ public partial class Player : Node2D
 							storedInventory.Add(shelfImOn.Contains);
 							storedInventoryNumber = storedInventory.Count;
 							GD.Print(storedInventoryNumber);
-                            if (soundPlayed == false)
-                            {
-                                sfxCollect.Play();
-                                soundPlayed = true;
-                            }
-                        }
+							if (soundPlayed == false)
+							{
+								sfxCollect.Play();
+								soundPlayed = true;
+							}
+						}
 					}
-                }
+				}
 			}
 		}
 
@@ -177,6 +177,14 @@ public partial class Player : Node2D
 		else
 		{
 			playerAnimation.Stop();
+		}
+
+		if (GameManager.positionReset[playerNumber - 1] == true)
+		{
+			GD.Print("Position changed!");
+			GD.Print(GameManager.initialPlayerPositions[playerNumber - 1]);
+			GlobalPosition = GameManager.initialPlayerPositions[playerNumber - 1];
+			GameManager.positionReset[playerNumber - 1] = false;
 		}
 	}
 }
