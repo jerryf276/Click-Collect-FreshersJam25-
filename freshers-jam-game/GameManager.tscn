@@ -1,9 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvi8fgilxdndj"]
+[gd_scene format=3 uid="uid://cvi8fgilxdndj"]
 
 [ext_resource type="Script" uid="uid://bfm3q6pcxp7wq" path="res://GameManager.cs" id="1_p13vs"]
 
-[node name="GameManager" type="Node2D"]
+[node name="GameManager" type="Node2D" unique_id=1167651109]
 script = ExtResource("1_p13vs")
 
-[node name="DayTime" type="Timer" parent="."]
+[node name="DayTime" type="Timer" parent="." unique_id=475493332]
 one_shot = true
