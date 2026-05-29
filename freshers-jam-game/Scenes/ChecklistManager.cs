@@ -100,7 +100,7 @@ public partial class ChecklistManager : Node
     public void GenerateNewList() { 
         int numberOfItems = rng.RandiRange(minItemsPerList, maxItemsPerList);
 
-        GD.Print(itemsInShop);
+        //GD.Print(itemsInShop);
 
         while (itemsInCurrentList.Count < numberOfItems) { 
             int indexChosen = rng.RandiRange(0, itemsInShop.Count - 1);

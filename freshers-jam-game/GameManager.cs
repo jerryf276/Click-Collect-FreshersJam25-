@@ -67,7 +67,7 @@ public partial class GameManager : Node2D
         DisplayServer.WindowSetTitle("Click & collect");
 
         instance.dayTimer = instance.GetNode<Timer>("DayTime");
-        instance.dayTimer.WaitTime = 100;
+        instance.dayTimer.WaitTime = 10;
 
         currentSceneState = SceneState.MAIN_MENU;
 
@@ -98,7 +98,7 @@ public partial class GameManager : Node2D
     public override void _Process(double delta)
     {
 
-        GD.Print("CURRENT PROGRESS: ", currentProgress);
+      //  GD.Print("CURRENT PROGRESS: ", currentProgress);
 
         
         if (currentProgress==quota&&newdaycreated==false)
@@ -123,7 +123,11 @@ public partial class GameManager : Node2D
             
             onNewday(quota,MapSize,MapSize,itemsPerCat);
         }
-       // GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
+
+        if (instance.dayTimer.TimeLeft > 0.0f)
+        {
+            GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
+        }
     }
 
     public static void AddtoPlayer(Player player)
@@ -190,6 +194,7 @@ public partial class GameManager : Node2D
 
     static public void OnMainMenuTransition()
     {
+            GD.Print("Function loaded!");
             Node newScene;
             instance.dayTimer.Stop();
             instance.Playerlist.Clear();
@@ -203,7 +208,6 @@ public partial class GameManager : Node2D
            // instance.mainMenuScene = instance.GetNode<MainMenu>("TitleScreen");
 
     }
-
     static public void OnControlsStart()
     {
         
@@ -292,10 +296,20 @@ public partial class GameManager : Node2D
     {
         if (instance.dayTimer.TimeLeft <= 0.0f)
         {
-           // GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
+            // GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
+            disablePauseMenu();
             return true;
         }
         return false;
+    }
+
+    static private void disablePauseMenu()
+    {
+        //disables pause menu when game over screen happens
+        PauseMenu pauseMenu = instance.GetNode<PauseMenu>("CormacShopGen/CanvasLayer2/PauseMenu");
+        pauseMenu.Visible = false;
+      //  instance.pause
+       // instance.pauseMenu.Visible = false;
     }
 
 }

@@ -32,7 +32,7 @@ public partial class PauseMenu : Control
         ResumeButton.ButtonDown += OnResumePressed;
         // ControlsButton.ButtonDown += OnControlsPressed;
 
-        buttonPressed = GetNode<AudioStreamPlayer>("ButtonPressed");
+        buttonPressed = GetNode<AudioStreamPlayer>("buttonPressed");
         Paused = GetNode<AudioStreamPlayer>("Pause");
         animationPlayer.AnimationFinished += OnAnimationFinished;
     }

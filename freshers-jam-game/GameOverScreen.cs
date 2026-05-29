@@ -13,11 +13,13 @@ public partial class GameOverScreen : Control
 
     bool gameQuit = false;
 
+    bool gameOverShown = false;
+
     public int daysCompleted;
 
     public override void _Ready()
     {
-        QuitButton = GetNode<Button>("QuitButton");
+        QuitButton = GetNode<Button>("PanelContainer/MarginContainer/VBoxContainer/QuitButton");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         gameOverSound = GetNode<AudioStreamPlayer>("GameOverSfx");
 
@@ -28,7 +30,7 @@ public partial class GameOverScreen : Control
 
     public override void _Process(double delta)
     {
-        if (GameManager.IsGameOver() == true && GetTree().Paused == false)
+        if (GameManager.IsGameOver() == true && GetTree().Paused == false && gameOverShown == false)
         {
             GameOver();
         }
@@ -57,5 +59,7 @@ public partial class GameOverScreen : Control
         {
             GameManager.OnMainMenuTransition();
         }
+
+        gameOverShown = true;
     }
 }

@@ -594,7 +594,7 @@ public partial class ShopGenerator : Node
             if (!itemsByShelfType.ContainsKey((Shelf.ShelfType)typeAndItem[0].ToInt())) itemsByShelfType.Add((Shelf.ShelfType)typeAndItem[0].ToInt(), new List<string>());
             if (itemsByShelfType[(Shelf.ShelfType)typeAndItem[0].ToInt()] == null) itemsByShelfType[(Shelf.ShelfType)(typeAndItem[0].ToInt())] = new List<string>();
             itemsByShelfType[(Shelf.ShelfType)(typeAndItem[0].ToInt())].Add(typeAndItem[1]);
-            GD.Print(typeAndItem);
+           // GD.Print(typeAndItem);
         }
     }
 }
