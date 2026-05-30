@@ -67,7 +67,7 @@ public partial class GameManager : Node2D
         DisplayServer.WindowSetTitle("Click & collect");
 
         instance.dayTimer = instance.GetNode<Timer>("DayTime");
-        instance.dayTimer.WaitTime = 10;
+        instance.dayTimer.WaitTime = 200;
 
         currentSceneState = SceneState.MAIN_MENU;
 
@@ -126,7 +126,7 @@ public partial class GameManager : Node2D
 
         if (instance.dayTimer.TimeLeft > 0.0f)
         {
-            GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
+           // GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
         }
     }
 
@@ -223,6 +223,7 @@ public partial class GameManager : Node2D
     static void onNewday(int quota, int mapHeight, int MapWidth,int itemsPerCatigory)
     {
         GD.Print("It's a new day.");
+        instance.dayTimer.Stop();
         instance.dayTimer.Start();
         instance.totalDaysCompleted++;
         instance.dayNum++;

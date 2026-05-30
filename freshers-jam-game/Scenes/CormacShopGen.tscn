@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://cdpwh4yohbv5o"]
+[gd_scene format=4 uid="uid://cdpwh4yohbv5o"]
 
 [ext_resource type="PackedScene" uid="uid://burgd3s83xa3o" path="res://UI/Checklist.tscn" id="1_comkp"]
 [ext_resource type="TileSet" uid="uid://cpukuftv7e2nq" path="res://Scenes/CormacTestShopSet.tres" id="1_qfsg4"]
@@ -13,16 +13,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_comkp"]
 size = Vector2(200, 200)
 
-[node name="CormacShopGen" type="Node2D"]
+[node name="CormacShopGen" type="Node2D" unique_id=2101566523]
 texture_filter = 1
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1329798732]
 y_sort_enabled = true
 scale = Vector2(4, 4)
 tile_map_data = PackedByteArray("AAD//wAAAQAAAAAACQD+/wAAAQAAAAAACQD9/wAAAQAAAAAACQD8/wAAAQAAAAAACQD7/wAAAQAAAAAACQD7/wEAAQAAAAAACQD7/wIAAQAAAAAACQD7/wMAAQAAAAAACQD7/wQAAQAAAAAACQD7/wUAAQAAAAAACQD8/wUAAQAAAAAACQD9/wUAAQAAAAAACQD+/wUAAQAAAAAACQD//wUAAQAAAAAACQD//wQAAQAAAAAACgD+/wQAAQAAAAAACgD//wMAAQAAAAAACgD+/wMAAQAAAAAACgD//wIAAQAAAAAACgD+/wIAAQAAAAAACgD//wEAAQAAAAAACgD+/wEAAQAAAAAACgD9/wEAAQAAAAAACgD8/wEAAQAAAAAACgD8/wIAAQAAAAAACgD9/wIAAQAAAAAACgD9/wMAAQAAAAAACgD8/wMAAQAAAAAACgD8/wQAAQAAAAAACgD9/wQAAQAAAAAACgA=")
 tile_set = ExtResource("1_qfsg4")
 
-[node name="ShopGenerator" type="Node" parent="." node_paths=PackedStringArray("tilemap", "checklistManager")]
+[node name="ShopGenerator" type="Node" parent="." unique_id=1536780107 node_paths=PackedStringArray("tilemap", "checklistManager")]
 script = ExtResource("2_se3lx")
 tilemap = NodePath("../TileMapLayer")
 tilesInMap = {
@@ -40,43 +40,44 @@ tilesInMap = {
 }
 checklistManager = NodePath("../ChecklistManager")
 
-[node name="Player" parent="." instance=ExtResource("3_se3lx")]
+[node name="Player" parent="." unique_id=1453281758 instance=ExtResource("3_se3lx")]
 position = Vector2(-125, 192)
 scale = Vector2(0.5, 0.5)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(247, 317)
+[node name="Camera2D" type="Camera2D" parent="." unique_id=114867576]
+position = Vector2(380, 400)
+zoom = Vector2(0.8, 0.8)
 
-[node name="ChecklistManager" type="Node" parent="." node_paths=PackedStringArray("dropOffArea", "checklistUI")]
+[node name="ChecklistManager" type="Node" parent="." unique_id=390104939 node_paths=PackedStringArray("dropOffArea", "checklistUI")]
 script = ExtResource("4_comkp")
 dropOffArea = NodePath("../DropOffArea")
 checklistUI = NodePath("../CanvasLayer/Panel")
 
-[node name="ListDone" type="AudioStreamPlayer" parent="ChecklistManager"]
+[node name="ListDone" type="AudioStreamPlayer" parent="ChecklistManager" unique_id=264165282]
 stream = ExtResource("5_ub8qo")
 volume_db = 1.874
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=522015649]
 
-[node name="Panel" parent="CanvasLayer" instance=ExtResource("1_comkp")]
+[node name="Panel" parent="CanvasLayer" unique_id=1386150600 instance=ExtResource("1_comkp")]
 metadata/_edit_use_anchors_ = true
 
-[node name="DropOffArea" type="Area2D" parent="."]
+[node name="DropOffArea" type="Area2D" parent="." unique_id=876759432]
 position = Vector2(-124, 192)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DropOffArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropOffArea" unique_id=150630385]
 shape = SubResource("RectangleShape2D_comkp")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=2006751855]
 layer = 2
 
-[node name="PauseMenu" parent="CanvasLayer2" instance=ExtResource("6_e2bt4")]
+[node name="PauseMenu" parent="CanvasLayer2" unique_id=1634488299 instance=ExtResource("6_e2bt4")]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1517702990]
 stream = ExtResource("8_d6ao8")
 volume_db = -5.622
 autoplay = true
 
-[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=1110395838]
 
-[node name="GameOverScreen" parent="CanvasLayer3" instance=ExtResource("9_8oqob")]
+[node name="GameOverScreen" parent="CanvasLayer3" unique_id=1225623436 instance=ExtResource("9_8oqob")]
