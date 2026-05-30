@@ -293,7 +293,6 @@ public partial class GameManager : Node2D
 
     static public bool IsGameOver()
     {
-        GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
         if (instance.dayTimer.TimeLeft <= 0.0f)
         {
             // GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
