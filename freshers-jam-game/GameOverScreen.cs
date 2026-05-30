@@ -34,6 +34,7 @@ public partial class GameOverScreen : Control
         animationPlayer.AnimationFinished += OnAnimationFinished;
 
         QuitButton.ButtonDown += OnQuitButtonPressed;
+        Visible = false;
     }
 
     public override void _Process(double delta)
@@ -41,6 +42,7 @@ public partial class GameOverScreen : Control
         if (GameManager.IsGameOver() == true && GetTree().Paused == false && gameOverShown == false)
         {
             GameOver();
+            Visible = true;
         }
     }
 

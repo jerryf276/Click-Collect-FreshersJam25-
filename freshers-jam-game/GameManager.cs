@@ -98,8 +98,7 @@ public partial class GameManager : Node2D
     public override void _Process(double delta)
     {
 
-     GD.Print("CURRENT PROGRESS: ", currentProgress);
-        GD.Print("QUOTA: ", quota);   
+
         if (currentProgress==quota&&newdaycreated==false)
         {
             GD.Print("Day finished!");
@@ -294,6 +293,7 @@ public partial class GameManager : Node2D
 
     static public bool IsGameOver()
     {
+        GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
         if (instance.dayTimer.TimeLeft <= 0.0f)
         {
             // GD.Print("TIME LEFT: ", instance.dayTimer.TimeLeft);
@@ -307,6 +307,10 @@ public partial class GameManager : Node2D
     {
         //disables pause menu when game over screen happens
         PauseMenu pauseMenu = instance.GetNode<PauseMenu>("CormacShopGen/CanvasLayer2/PauseMenu");
+        if (pauseMenu == null)
+        {
+            pauseMenu = instance.GetNode<PauseMenu>("SplitScreenScene/CanvasLayer2/PauseMenu");
+        }
         pauseMenu.Visible = false;
       //  instance.pause
        // instance.pauseMenu.Visible = false;

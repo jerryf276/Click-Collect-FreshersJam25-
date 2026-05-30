@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://ciavpdwtelhf4"]
+[gd_scene format=4 uid="uid://ciavpdwtelhf4"]
 
 [ext_resource type="Script" uid="uid://d1lek3kvrbu4h" path="res://SplitScreenManager.cs" id="1_s5sy2"]
 [ext_resource type="PackedScene" uid="uid://dx7ecrxlenx0q" path="res://Player.tscn" id="2_4w0rk"]
@@ -9,40 +9,41 @@
 [ext_resource type="PackedScene" uid="uid://burgd3s83xa3o" path="res://UI/Checklist.tscn" id="6_xv05t"]
 [ext_resource type="PackedScene" uid="uid://calxjxddftcmj" path="res://PauseMenu.tscn" id="7_sqft4"]
 [ext_resource type="AudioStream" uid="uid://cg0er6cxpy0gu" path="res://audio/GameMusic.mp3" id="8_knkey"]
+[ext_resource type="PackedScene" uid="uid://votv86sjclyc" path="res://GameOverScreen.tscn" id="10_4416h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4416h"]
 size = Vector2(200, 200)
 
-[node name="SplitScreenScene" type="Node2D"]
+[node name="SplitScreenScene" type="Node2D" unique_id=1403804473]
 texture_filter = 1
 script = ExtResource("1_s5sy2")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=767735148]
 
-[node name="Panel" parent="CanvasLayer" instance=ExtResource("6_xv05t")]
+[node name="Panel" parent="CanvasLayer" unique_id=1583854864 instance=ExtResource("6_xv05t")]
 metadata/_edit_use_anchors_ = true
 
-[node name="SubViewportContainer1" type="SubViewportContainer" parent="."]
+[node name="SubViewportContainer1" type="SubViewportContainer" parent="." unique_id=1164929988]
 texture_filter = 1
 offset_right = 571.0
 offset_bottom = 645.0
 stretch = true
 
-[node name="SubViewport1" type="SubViewport" parent="SubViewportContainer1"]
+[node name="SubViewport1" type="SubViewport" parent="SubViewportContainer1" unique_id=2138905753]
 handle_input_locally = false
 size = Vector2i(571, 645)
 render_target_update_mode = 4
 
-[node name="TexNearest" type="Node2D" parent="SubViewportContainer1/SubViewport1"]
+[node name="TexNearest" type="Node2D" parent="SubViewportContainer1/SubViewport1" unique_id=1441453376]
 texture_filter = 1
 
-[node name="TileMapLayer" type="TileMapLayer" parent="SubViewportContainer1/SubViewport1/TexNearest"]
+[node name="TileMapLayer" type="TileMapLayer" parent="SubViewportContainer1/SubViewport1/TexNearest" unique_id=1297083079]
 y_sort_enabled = true
 scale = Vector2(4, 4)
 tile_map_data = PackedByteArray("AAD//wAAAQAAAAAACQD+/wAAAQAAAAAACQD9/wAAAQAAAAAACQD8/wAAAQAAAAAACQD7/wAAAQAAAAAACQD7/wEAAQAAAAAACQD7/wIAAQAAAAAACQD7/wMAAQAAAAAACQD7/wQAAQAAAAAACQD7/wUAAQAAAAAACQD8/wUAAQAAAAAACQD9/wUAAQAAAAAACQD+/wUAAQAAAAAACQD//wUAAQAAAAAACQD//wQAAQAAAAAACgD+/wQAAQAAAAAACgD//wMAAQAAAAAACgD+/wMAAQAAAAAACgD//wIAAQAAAAAACgD+/wIAAQAAAAAACgD//wEAAQAAAAAACgD+/wEAAQAAAAAACgD9/wEAAQAAAAAACgD8/wEAAQAAAAAACgD8/wIAAQAAAAAACgD9/wIAAQAAAAAACgD9/wMAAQAAAAAACgD8/wMAAQAAAAAACgD8/wQAAQAAAAAACgD9/wQAAQAAAAAACgA=")
 tile_set = ExtResource("3_cs2oi")
 
-[node name="ShopGenerator" type="Node" parent="SubViewportContainer1/SubViewport1/TexNearest" node_paths=PackedStringArray("tilemap", "checklistManager")]
+[node name="ShopGenerator" type="Node" parent="SubViewportContainer1/SubViewport1/TexNearest" unique_id=1151973892 node_paths=PackedStringArray("tilemap", "checklistManager")]
 script = ExtResource("4_sqft4")
 tilemap = NodePath("../TileMapLayer")
 tilesInMap = {
@@ -60,54 +61,59 @@ tilesInMap = {
 }
 checklistManager = NodePath("../ChecklistManager")
 
-[node name="ChecklistManager" type="Node" parent="SubViewportContainer1/SubViewport1/TexNearest" node_paths=PackedStringArray("dropOffArea", "checklistUI")]
+[node name="ChecklistManager" type="Node" parent="SubViewportContainer1/SubViewport1/TexNearest" unique_id=135181270 node_paths=PackedStringArray("dropOffArea", "checklistUI")]
 script = ExtResource("5_knkey")
 dropOffArea = NodePath("../DropOffArea")
 checklistUI = NodePath("../../../../CanvasLayer/Panel")
 
-[node name="ListDone" type="AudioStreamPlayer" parent="SubViewportContainer1/SubViewport1/TexNearest/ChecklistManager"]
+[node name="ListDone" type="AudioStreamPlayer" parent="SubViewportContainer1/SubViewport1/TexNearest/ChecklistManager" unique_id=926194390]
 stream = ExtResource("5_xv05t")
 volume_db = 1.874
 
-[node name="Player1" parent="SubViewportContainer1/SubViewport1/TexNearest" instance=ExtResource("2_4w0rk")]
+[node name="Player1" parent="SubViewportContainer1/SubViewport1/TexNearest" unique_id=1818326067 instance=ExtResource("2_4w0rk")]
 position = Vector2(-125, 192)
 scale = Vector2(0.5, 0.5)
 
-[node name="Camera2D1" type="Camera2D" parent="SubViewportContainer1/SubViewport1/TexNearest/Player1"]
+[node name="Camera2D1" type="Camera2D" parent="SubViewportContainer1/SubViewport1/TexNearest/Player1" unique_id=1236497130]
 
-[node name="DropOffArea" type="Area2D" parent="SubViewportContainer1/SubViewport1/TexNearest"]
+[node name="DropOffArea" type="Area2D" parent="SubViewportContainer1/SubViewport1/TexNearest" unique_id=414385597]
 position = Vector2(-124, 192)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer1/SubViewport1/TexNearest/DropOffArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer1/SubViewport1/TexNearest/DropOffArea" unique_id=1058247020]
 shape = SubResource("RectangleShape2D_4416h")
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="." unique_id=1580930165]
 offset_left = 588.0
 offset_top = 3.0
 offset_right = 1150.0
 offset_bottom = 648.0
 stretch = true
 
-[node name="SubViewport2" type="SubViewport" parent="SubViewportContainer2"]
+[node name="SubViewport2" type="SubViewport" parent="SubViewportContainer2" unique_id=22555938]
 handle_input_locally = false
 size = Vector2i(562, 645)
 render_target_update_mode = 4
 
-[node name="TexNearest" type="Node2D" parent="SubViewportContainer2/SubViewport2"]
+[node name="TexNearest" type="Node2D" parent="SubViewportContainer2/SubViewport2" unique_id=583804033]
 texture_filter = 1
 
-[node name="Player2" parent="SubViewportContainer2/SubViewport2/TexNearest" instance=ExtResource("2_4w0rk")]
+[node name="Player2" parent="SubViewportContainer2/SubViewport2/TexNearest" unique_id=1202009629 instance=ExtResource("2_4w0rk")]
 position = Vector2(-100, 192)
 scale = Vector2(0.5, 0.5)
 playerNumber = 2
 
-[node name="Camera2D2" type="Camera2D" parent="SubViewportContainer2/SubViewport2/TexNearest/Player2"]
+[node name="Camera2D2" type="Camera2D" parent="SubViewportContainer2/SubViewport2/TexNearest/Player2" unique_id=1241589113]
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1365228364]
 
-[node name="PauseMenu" parent="CanvasLayer2" instance=ExtResource("7_sqft4")]
+[node name="PauseMenu" parent="CanvasLayer2" unique_id=1966526954 instance=ExtResource("7_sqft4")]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=226097475]
 stream = ExtResource("8_knkey")
 volume_db = -5.622
 autoplay = true
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=1607893256]
+
+[node name="GameOverScreen" parent="CanvasLayer3" unique_id=856205930 instance=ExtResource("10_4416h")]
+metadata/_edit_use_anchors_ = true
