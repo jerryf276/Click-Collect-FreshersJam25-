@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -17,12 +18,19 @@ public partial class GameOverScreen : Control
 
     public int daysCompleted;
 
+    private Label productsDeliveredText;
+    private Label listsCompletedText;
+    private Label daysCompletedText;
+
+
     public override void _Ready()
     {
         QuitButton = GetNode<Button>("PanelContainer/MarginContainer/VBoxContainer/QuitButton");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         gameOverSound = GetNode<AudioStreamPlayer>("GameOverSfx");
-
+        daysCompletedText = GetNode<Label>("PanelContainer/MarginContainer/VBoxContainer/DaysCompleted");
+        listsCompletedText = GetNode<Label>("PanelContainer/MarginContainer/VBoxContainer/ListsCompleted");
+        productsDeliveredText = GetNode<Label>("PanelContainer/MarginContainer/VBoxContainer/ProductsDelivered");
         animationPlayer.AnimationFinished += OnAnimationFinished;
 
         QuitButton.ButtonDown += OnQuitButtonPressed;
@@ -38,6 +46,9 @@ public partial class GameOverScreen : Control
 
     private void GameOver()
     {
+        productsDeliveredText.Text = "Products Delivered: " + GameManager.GetItemsDelivered();
+        listsCompletedText.Text = "Lists Completed: " + GameManager.GetListsCompleted();
+        daysCompletedText.Text = "Days Completed: " + GameManager.GetDaysCompleted(); 
         GetTree().Paused = true;
         animationPlayer.Play("blur");
         gameOverSound.Play();

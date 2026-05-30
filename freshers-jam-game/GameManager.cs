@@ -67,7 +67,7 @@ public partial class GameManager : Node2D
         DisplayServer.WindowSetTitle("Click & collect");
 
         instance.dayTimer = instance.GetNode<Timer>("DayTime");
-        instance.dayTimer.WaitTime = 200;
+        instance.dayTimer.WaitTime = 100;
 
         currentSceneState = SceneState.MAIN_MENU;
 
@@ -98,14 +98,12 @@ public partial class GameManager : Node2D
     public override void _Process(double delta)
     {
 
-      //  GD.Print("CURRENT PROGRESS: ", currentProgress);
-
-        
+     GD.Print("CURRENT PROGRESS: ", currentProgress);
+        GD.Print("QUOTA: ", quota);   
         if (currentProgress==quota&&newdaycreated==false)
         {
             GD.Print("Day finished!");
             instance.newdaycreated = true;
-            GD.Print("woah");
             if((dayNum & 3)==0)
             {
                 quota++;
@@ -122,6 +120,7 @@ public partial class GameManager : Node2D
             }
             
             onNewday(quota,MapSize,MapSize,itemsPerCat);
+            currentProgress = 0;
         }
 
         if (instance.dayTimer.TimeLeft > 0.0f)
