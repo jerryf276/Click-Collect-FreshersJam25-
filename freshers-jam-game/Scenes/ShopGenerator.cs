@@ -269,6 +269,7 @@ public partial class ShopGenerator : Node
                     }
 
                     ((ChecklistManager)checklistManager).itemsInShop = allItemsChosen;
+                    ((ChecklistManager)checklistManager).itemsInCurrentList.Clear();
                     ((ChecklistManager)checklistManager).GenerateNewList();
                 }
             }
